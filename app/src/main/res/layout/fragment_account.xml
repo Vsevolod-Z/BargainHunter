@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_account_page"
+    tools:context=".AccountFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/price_card_background"
+        android:scrollbarSize="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/yearsCard"
+                    android:layout_width="180dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="50dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/avatarCard">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/yearsLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/account_card_background">
+
+                        <TextView
+                            android:id="@+id/textViewYearsNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="46dp"
+                            android:layout_marginEnd="46dp"
+                            android:fontFamily="@font/new_zelek"
+                            android:text="8"
+                            android:textColor="#FFFFFF"
+                            android:textSize="68sp"
+                            app:layout_constraintBottom_toTopOf="@+id/textViewYears"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewYears"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="46dp"
+                            android:layout_marginEnd="46dp"
+                            android:layout_marginBottom="16dp"
+                            android:fontFamily="@font/new_zelek"
+                            android:text="Years:"
+                            android:textColor="#FFFFFF"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/lvlCard"
+                    android:layout_width="180dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="8dp"
+
+                    android:shadowDx="24"
+                    android:shadowDy="24"
+                    android:shadowRadius="24"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="50dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/avatarCard">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/lvlLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/account_card_background">
+
+                        <TextView
+                            android:id="@+id/textViewLvl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="46dp"
+                            android:layout_marginEnd="46dp"
+                            android:layout_marginBottom="16dp"
+                            android:fontFamily="@font/new_zelek"
+                            android:text="LvL:"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewLvlNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="46dp"
+                            android:layout_marginEnd="46dp"
+                            android:fontFamily="@font/new_zelek"
+                            android:text="42"
+                            android:textColor="#FFFFFF"
+                            android:textSize="68sp"
+                            app:layout_constraintBottom_toTopOf="@+id/textViewLvl"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/steamCard"
+                    android:layout_width="180dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="50dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/yearsCard">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/steamLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/steam_card_background">
+
+                        <ImageView
+                            android:id="@+id/imageViewSteam"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_marginStart="39dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="39dp"
+                            android:outlineSpotShadowColor="#FFFFFF"
+                            android:shadowColor="#FEFEFE"
+                            android:shadowDx="24"
+                            android:shadowDy="24"
+                            android:shadowRadius="24"
+                            android:src="@drawable/steam_icon_color"
+                            app:cardBackgroundColor="#00FFFFFF"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="50dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewSteam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="46dp"
+                            android:layout_marginEnd="46dp"
+                            android:fontFamily="@font/new_zelek"
+                            android:text=" Steam authorization"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.51"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageViewSteam" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/vkCard"
+                    android:layout_width="180dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="50dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/steamCard">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/vkLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/vk_card_background">
+
+                        <ImageView
+                            android:id="@+id/imageViewVK"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_marginStart="39dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="39dp"
+                            android:src="@drawable/vk_icon_color"
+                            app:cardBackgroundColor="#00FFFFFF"
+                            app:cardElevation="3dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewVK"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="46dp"
+                            android:layout_marginEnd="46dp"
+                            android:fontFamily="@font/new_zelek"
+                            android:text="VK"
+
+                            android:textColor="#FFFFFF"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageViewVK" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/telegramCard"
+                    android:layout_width="180dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="8dp"
+
+
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="50dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/discordCard">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/telegramLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/telegram_card_background">
+
+                        <ImageView
+                            android:id="@+id/imageViewTG"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_marginStart="39dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="39dp"
+                            android:outlineSpotShadowColor="#FFFFFF"
+                            android:shadowColor="#FEFEFE"
+                            android:shadowDx="24"
+                            android:shadowDy="24"
+                            android:shadowRadius="24"
+                            android:src="@drawable/telegram_icon_color"
+                            app:cardBackgroundColor="#00FFFFFF"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="50dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewTG"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="46dp"
+                            android:layout_marginEnd="46dp"
+                            android:fontFamily="@font/new_zelek"
+                            android:text="Telegram BOT"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageViewTG" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/avatarCard"
+                    android:layout_width="200dp"
+                    android:layout_height="230dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTintMode="add"
+
+
+                    app:cardBackgroundColor="#115E98"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="50dp"
+                    app:contentPadding="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/steamAvatar"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="top"
+                        android:foregroundGravity="top"
+                        android:src="@drawable/account_logo" />
+
+                    <TextView
+                        android:id="@+id/textViewNickName"
+                        android:layout_width="200dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="bottom|center"
+                        android:layout_marginStart="46dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="46dp"
+                        android:fontFamily="@font/new_zelek"
+                        android:gravity="center"
+                        android:text="SevZ"
+                        android:textColor="#FFFFFF"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.51"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageViewSteam" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/discordCard"
+                    android:layout_width="180dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="8dp"
+
+
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="50dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lvlCard">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/discordLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/discord_card_background">
+
+                        <ImageView
+                            android:id="@+id/imageViewDiscord"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_marginStart="39dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="39dp"
+                            android:outlineSpotShadowColor="#FFFFFF"
+                            android:shadowColor="#FEFEFE"
+                            android:shadowDx="24"
+                            android:shadowDy="24"
+                            android:shadowRadius="24"
+                            android:src="@drawable/discord_icon_color"
+                            app:cardBackgroundColor="#00FFFFFF"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="50dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewDiscord"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="46dp"
+                            android:layout_marginEnd="46dp"
+                            android:fontFamily="@font/new_zelek"
+                            android:text="Discord"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageViewDiscord" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
