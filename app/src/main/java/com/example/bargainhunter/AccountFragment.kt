@@ -1,21 +1,23 @@
 package com.example.bargainhunter
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.client.DefaultHttpClient
+import org.json.JSONObject
 import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +34,7 @@ class AccountFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var myView: View
+    private lateinit var webView: WebView
     var serverUrl = "http://109.254.9.58:8080"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,54 +58,79 @@ class AccountFragment : Fragment() {
         var tvYears = view.findViewById<TextView>(R.id.textViewYearsNum)
         var tvLVL = view.findViewById<TextView>(R.id.textViewLvlNum)
         var nickName = view.findViewById<TextView>(R.id.textViewNickName)
+        webView = view.findViewById<WebView>(R.id.webView)
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                // Проверяем загружаемый URL
+                val Url = Uri.parse(url)
 
+                if (Url.authority.equals("$serverUrl")) {
+                    // Аутентификация завершена и URL содержит идентификатор пользователя
+                    webView.stopLoading()
+
+                    // Извлекаем идентификатор пользователя
+                    val userAccountUrl = Uri.parse(Url.getQueryParameter("openid.identity"))
+                    val userId = userAccountUrl.lastPathSegment
+                    Log.d("steamemum","useriId " + userId)
+                    // Делаем что-то с идентификатором пользователя
+                }
+
+                super.onPageStarted(view, url, favicon)
+            }
+        }
         var icon = view.findViewById<ImageView>(R.id.steamAvatar)
+
         steamCard.setOnClickListener {
-           launchChromeCustomTabForAuth()
+
+            openWebView()
         }
     }
-    private fun launchChromeCustomTabForAuth() {
-        val authUrl = "https://steamcommunity.com/openid/login?" +
+    private fun openWebView() {
+
+        webView.loadUrl("https://steamcommunity.com/openid/login?" +
                 "openid.return_to=$serverUrl/auth/steamdata" +
                 "&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" +
                 "&openid.identity=http://specs.openid.net/auth/2.0/identifier_select" +
                 "&openid.mode=checkid_setup" +
                 "&openid.ns=http://specs.openid.net/auth/2.0" +
-                "&openid.realm=$serverUrl/auth/steamdata"
+                "&openid.realm=$serverUrl/auth/steamdata")
 
-        val builder = CustomTabsIntent.Builder()
-        val customTabsIntent = builder.build()
-        customTabsIntent.intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        customTabsIntent.launchUrl(requireContext(), Uri.parse(authUrl))
-        Thread {
-            try {
-                Log.e("steamemum", "try")
-                val url = URL("$serverUrl/auth/steamdata")
-                val urlConnection = url.openConnection() as HttpURLConnection
-                urlConnection.requestMethod = "GET"
 
-                val responseCode = urlConnection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    val inputStream = urlConnection.inputStream
-                    val bufferedReader = BufferedReader(InputStreamReader(inputStream))
-                    val stringBuilder = StringBuilder()
+    }
+    class MyWebViewClient : WebViewClient() {
 
-                    var line: String? = null
-                    while (run {
-                            line = bufferedReader.readLine()
-                            line
-                        } != null) {
-                        stringBuilder.append(line)
-                    }
-                    inputStream.close()
 
-                    val json = stringBuilder.toString()
-                    Log.e("steamemum", "json: "+ json)
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            Log.d("steamemum","url: "+ url)
+            if (url != null) {
+                if ( url.startsWith("https://steamcommunity.com") || url.startsWith("https://steamcommunity.com") ) {
+                    view?.context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    return true
                 }
-            }catch (e: Exception) {
-                Log.e("steamemum", "Error loading steam", e)
             }
+            if (url?.startsWith("http://109.254.9.58:8080/auth/steamdata?openid.ns") == true) {
+                // URL-адрес начинается с нужной строки, загружаем содержимое страницы
+                val httpClient = DefaultHttpClient()
+                val httpGet = HttpGet(url)
+                val response = httpClient.execute(httpGet)
+                val inputStream = response.entity.content
+
+                // Извлекаем JSON из тела ответа
+                val jsonString = inputStream.bufferedReader().use(BufferedReader::readText)
+                val jsonObject = JSONObject(jsonString)
+
+
+                Log.d("steamemum","jsonObject: "+ jsonObject)
+                // Делаем что-то с полученным JSON
+
+                // Возвращаем true, чтобы сообщить WebView, что мы обработали этот URL-адрес
+                return true
+            }
+
+            // Возвращаем false, чтобы WebView обработала этот URL-адрес самостоятельно
+            return false
         }
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
