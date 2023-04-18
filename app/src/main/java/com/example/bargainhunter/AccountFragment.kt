@@ -59,7 +59,7 @@ class AccountFragment : Fragment() {
         var tvLVL = view.findViewById<TextView>(R.id.textViewLvlNum)
         var nickName = view.findViewById<TextView>(R.id.textViewNickName)
         webView = view.findViewById<WebView>(R.id.webView)
-        webView.webViewClient = object : WebViewClient() {
+       /* webView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 // Проверяем загружаемый URL
                 val Url = Uri.parse(url)
@@ -77,7 +77,7 @@ class AccountFragment : Fragment() {
 
                 super.onPageStarted(view, url, favicon)
             }
-        }
+        }*/
         var icon = view.findViewById<ImageView>(R.id.steamAvatar)
 
         steamCard.setOnClickListener {

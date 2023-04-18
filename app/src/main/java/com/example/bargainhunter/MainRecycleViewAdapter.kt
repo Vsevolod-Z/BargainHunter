@@ -191,6 +191,7 @@ class MainRecycleViewAdapter(private  val con: Context,private val appList: Muta
     }
 
     class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         var img = itemView.findViewById<ImageView>(R.id.icon)
         var title = itemView.findViewById<TextView>(R.id.tvTitle)
         var discount = itemView.findViewById<TextView>(R.id.tvDiscount)

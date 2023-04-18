@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bargainhunter.models.App
+import com.example.bargainhunter.models.Genres
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
@@ -36,21 +37,35 @@ class GameListFragment() : Fragment() {
     var pageCount = 1
     private lateinit var myView: View
     private lateinit var recyclerView: RecyclerView
+    private lateinit var genresRecyclerView: RecyclerView
+    lateinit var adapter : MainRecycleViewAdapter
+    lateinit var  genreAdapter : GenresRecycleViewAdapter
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    public fun ResetPageCount(pCount: Int){
+        pageCount = pCount
+        loadNextData()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         myView = inflater.inflate(R.layout.fragment_game_list, container, false)
-        val recyclerView = myView?.findViewById<RecyclerView>(R.id.rcV)
-        val adapter = MainRecycleViewAdapter(myView.context, mutableListOf())
-        recyclerView!!.adapter = adapter
+        recyclerView = myView.findViewById<RecyclerView>(R.id.rcV)
+        genresRecyclerView = myView.findViewById<RecyclerView>(R.id.genresRecyclerView)
+
+        adapter = MainRecycleViewAdapter(myView.context, mutableListOf())
+        genreAdapter = GenresRecycleViewAdapter(myView.context,this)
+        loadGenres(genreAdapter)
+        recyclerView.adapter = adapter
+        genresRecyclerView.adapter = genreAdapter
+
         recyclerView.layoutManager = LinearLayoutManager(myView.context)
+        genresRecyclerView.layoutManager = LinearLayoutManager(myView.context, LinearLayoutManager.HORIZONTAL, false)
+
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -66,11 +81,11 @@ class GameListFragment() : Fragment() {
                     // Показать индикатор загрузки
                     adapter.setIsLoading(true)
                     // Загрузить следующую порцию данных
-                    loadNextData(adapter)
+                    loadNextData()
                 }
             }
         })
-        loadNextData(adapter)
+        loadNextData( )
         return myView
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,12 +98,40 @@ class GameListFragment() : Fragment() {
 
 
     }
-    fun loadNextData(adapter: MainRecycleViewAdapter) {
+    fun loadGenres(adapter: GenresRecycleViewAdapter){
+        val client = OkHttpClient()
+        var request = Request.Builder()
+            .url("http://109.254.9.58:8080/api/apps/getGenres")
+            .build()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = client.newCall(request).execute()
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                val responseString = response.body!!.string()
+                Log.d("genres", "responseString: ${responseString}")
+                val gson: Gson = GsonBuilder().create()
+
+                     var genres:MutableList<Genres>  = gson.fromJson(responseString, object : TypeToken<List<Genres>>() {}.type)
+                    // Добавить новые данные в список адаптера
+                withContext(Dispatchers.Main) {
+                    adapter.addGenres(genres)
+                    adapter.notifyDataSetChanged()
+                    // Скрыть индикатор загрузки
+
+                }
+
+
+            } catch (e: Exception) {
+                Log.e("loadNextData", "Error loading next data", e)
+            }
+        }
+    }
+    fun loadNextData() {
         // Загрузить следующую порцию данных из API или из другого источника
         // ...
         val client = OkHttpClient()
         var request = Request.Builder()
-            .url("http://109.254.9.58:8080/api/apps/getAppsPage?pageNum=" + pageCount + "&pageSize=" + 10)
+            .url("http://109.254.9.58:8080/api/apps/getAppsPage?pageNum=" + pageCount + "&pageSize=" + 10 + "&genres="+genreAdapter.selectedGenres)
             .build()
         Log.d("pagination", "pageCount: " + pageCount)
         CoroutineScope(Dispatchers.IO).launch {
@@ -107,6 +150,7 @@ class GameListFragment() : Fragment() {
                         adapter.addData(appList)
                         // Скрыть индикатор загрузки
                         adapter.setIsLoading(false)
+                        adapter.notifyDataSetChanged()
                     }
                 } catch (e: JsonSyntaxException) {
 
