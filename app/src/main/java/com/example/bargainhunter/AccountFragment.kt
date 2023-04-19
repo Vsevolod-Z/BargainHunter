@@ -4,15 +4,19 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.client.DefaultHttpClient
@@ -58,42 +62,45 @@ class AccountFragment : Fragment() {
         var tvYears = view.findViewById<TextView>(R.id.textViewYearsNum)
         var tvLVL = view.findViewById<TextView>(R.id.textViewLvlNum)
         var nickName = view.findViewById<TextView>(R.id.textViewNickName)
-        webView = view.findViewById<WebView>(R.id.webView)
-       /* webView.webViewClient = object : WebViewClient() {
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                // Проверяем загружаемый URL
-                val Url = Uri.parse(url)
-
-                if (Url.authority.equals("$serverUrl")) {
-                    // Аутентификация завершена и URL содержит идентификатор пользователя
-                    webView.stopLoading()
-
-                    // Извлекаем идентификатор пользователя
-                    val userAccountUrl = Uri.parse(Url.getQueryParameter("openid.identity"))
-                    val userId = userAccountUrl.lastPathSegment
-                    Log.d("steamemum","useriId " + userId)
-                    // Делаем что-то с идентификатором пользователя
-                }
-
-                super.onPageStarted(view, url, favicon)
-            }
-        }*/
         var icon = view.findViewById<ImageView>(R.id.steamAvatar)
 
-        steamCard.setOnClickListener {
+        webView = view.findViewById(R.id.webView)
 
+
+
+        steamCard.setOnClickListener {
             openWebView()
+            webView.isVisible = true
+
         }
     }
     private fun openWebView() {
 
-        webView.loadUrl("https://steamcommunity.com/openid/login?" +
-                "openid.return_to=$serverUrl/auth/steamdata" +
-                "&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" +
-                "&openid.identity=http://specs.openid.net/auth/2.0/identifier_select" +
-                "&openid.mode=checkid_setup" +
-                "&openid.ns=http://specs.openid.net/auth/2.0" +
-                "&openid.realm=$serverUrl/auth/steamdata")
+        webView.clearCache(true)
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                val url = request?.url.toString()
+                Log.d("steamemum","url " + url)
+                if (url.startsWith("http://anime/?openid.ns",  true)) {
+                    // Steam авторизация
+
+                    val uri = Uri.parse(url)
+                    val identity = uri.getQueryParameter("openid.identity")
+                    val steamId = identity?.replace("https://steamcommunity.com/openid/id/", "")
+                    webView.isVisible = false
+                    webView.loadUrl("about:blank")
+                    Log.d("steamemum","steamId " + steamId)
+                }
+                return super.shouldOverrideUrlLoading(view, request)
+            }
+        }
+
+            webView.loadUrl(
+                "https://steamcommunity.com/openid/login?openid.return_to=http://anime&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.mode=checkid_setup&openid.ns=http://specs.openid.net/auth/2.0&openid.realm=http://anime"
+            )
 
 
     }
