@@ -81,7 +81,7 @@ class WishListFragment : Fragment() {
             Toast.makeText(
                 context,
                 "Войдите в стим, либо измените настройки приватности",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
         }
 

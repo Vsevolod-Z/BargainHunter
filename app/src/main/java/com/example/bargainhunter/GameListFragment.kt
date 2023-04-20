@@ -45,6 +45,7 @@ class GameListFragment() : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     public fun ResetPageCount(pCount: Int){
+        adapter.clearData()
         pageCount = pCount
         loadNextData()
 
@@ -148,7 +149,7 @@ class GameListFragment() : Fragment() {
                     val appList: List<App> = gson.fromJson(responseString, object : TypeToken<List<App>>() {}.type)
                     // Добавить новые данные в список адаптера
                     withContext(Dispatchers.Main) {
-                        adapter.clearData()
+
                         adapter.addData(appList)
                         // Скрыть индикатор загрузки
                         adapter.setIsLoading(false)
