@@ -22,54 +22,38 @@ import androidx.core.content.res.ResourcesCompat
 import com.example.bargainhunter.models.App
 
 
-class MainRecycleViewAdapter(private  val con: Context,private val appList: MutableList<App>) : RecyclerView.Adapter<MainRecycleViewAdapter.MainViewHolder>(){
+class WishListRecycleViewAdapter(private  val con: Context) : RecyclerView.Adapter<WishListRecycleViewAdapter.WishListViewHolder>(){
+
+        lateinit var  wishList: MutableList<App>
+
     val context:Context
+
     init{
-    context = con
+        context = con
+        wishList= SteamUser.userData.apps
     }
-     var isLoading = false
-
-
-    fun addData(newDataList: List<App>) {
-        appList.addAll(newDataList)
-        notifyDataSetChanged()
-    }
-
-    fun clearData() {
-        appList.clear()
-        notifyDataSetChanged()
-    }
-
-    fun setIsLoading(isLoading: Boolean) {
-        this.isLoading = isLoading
-        notifyDataSetChanged()
-    }
-
-
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishListViewHolder {
         // Создаем ViewHolder для элемента списка
         val view = LayoutInflater.from(parent.context).inflate(R.layout.main_recycleview_item, parent, false)
 
-        return MainViewHolder(view)
+        return WishListViewHolder(view)
     }
 
-    override fun getItemCount() = appList.size
+    override fun getItemCount() = wishList.size
 
-    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WishListViewHolder, position: Int) {
         // Заполняем ViewHolder данными из списка
-        imageDownloadAndSet(holder,appList[position])
-        holder.title.text = appList[position].steamAppData.name
+        imageDownloadAndSet(holder,wishList[position])
+        holder.title.text = wishList[position].steamAppData.name
         val rating:Int = calculateRating(
-            appList[position].steamAppData.app_review.query_summary.total_reviews,
-            appList[position].steamAppData.app_review.query_summary.total_positive
+            wishList[position].steamAppData.app_review.query_summary.total_reviews,
+            wishList[position].steamAppData.app_review.query_summary.total_positive
         )
         if (rating!=0) {
             holder.rating.text = context.getString(R.string.rating_percent, rating)
         }
-        if(appList[position].steamAppData.price_overview.initial !=0) {
-            var prices = sortPrices(appList[position])
+        if(wishList[position].steamAppData.price_overview.initial !=0) {
+            var prices = sortPrices(wishList[position])
             var minPrice: Int
             var maxPrice: Int
             if (prices.last() > prices.first()){
@@ -138,7 +122,7 @@ class MainRecycleViewAdapter(private  val con: Context,private val appList: Muta
         prices.sorted()
         return prices
     }
-    private fun imageDownloadAndSet( holder: MainRecycleViewAdapter.MainViewHolder , app: App){
+    private fun imageDownloadAndSet(holder: WishListRecycleViewAdapter.WishListViewHolder, app: App){
 
         var bitmap: Bitmap
         var color: Int
@@ -188,7 +172,7 @@ class MainRecycleViewAdapter(private  val con: Context,private val appList: Muta
 
     }
 
-    class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class WishListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var img = itemView.findViewById<ImageView>(R.id.icon)
         var title = itemView.findViewById<TextView>(R.id.tvTitle)

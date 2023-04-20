@@ -1,5 +1,6 @@
 package com.example.bargainhunter
 
+import android.content.Context
 import android.os.Bundle
 
 import androidx.appcompat.app.AppCompatActivity
@@ -18,12 +19,15 @@ class MainActivity : AppCompatActivity() {
     var pageCount = 1
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        val prefs = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        prefs.edit().remove("userId").remove("timestamp").apply()
+        SteamUser.getUserData(this)
         super.onCreate(savedInstanceState)
         getSupportActionBar()?.hide()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initial()
+
 
 
 

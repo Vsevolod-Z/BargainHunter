@@ -47,6 +47,7 @@ class GameListFragment() : Fragment() {
     public fun ResetPageCount(pCount: Int){
         pageCount = pCount
         loadNextData()
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -129,11 +130,12 @@ class GameListFragment() : Fragment() {
     fun loadNextData() {
         // Загрузить следующую порцию данных из API или из другого источника
         // ...
+        val genres = genreAdapter.selectedGenres.joinToString(",")
         val client = OkHttpClient()
         var request = Request.Builder()
-            .url("http://109.254.9.58:8080/api/apps/getAppsPage?pageNum=" + pageCount + "&pageSize=" + 10 + "&genres="+genreAdapter.selectedGenres)
+            .url("http://109.254.9.58:8080/api/apps/getAppsPage?pageNum=" + pageCount + "&pageSize=" + 10 + "&genres="+genres)
             .build()
-        Log.d("pagination", "pageCount: " + pageCount)
+        Log.d("appList", "pageCount: " + pageCount)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = client.newCall(request).execute()
@@ -143,22 +145,22 @@ class GameListFragment() : Fragment() {
                 val gson: Gson = GsonBuilder().create()
 
                 try {
-                    val appList: List<App> =
-                        gson.fromJson(responseString, object : TypeToken<List<App>>() {}.type)
+                    val appList: List<App> = gson.fromJson(responseString, object : TypeToken<List<App>>() {}.type)
                     // Добавить новые данные в список адаптера
                     withContext(Dispatchers.Main) {
+                        adapter.clearData()
                         adapter.addData(appList)
                         // Скрыть индикатор загрузки
                         adapter.setIsLoading(false)
                         adapter.notifyDataSetChanged()
                     }
                 } catch (e: JsonSyntaxException) {
-
+                    Log.e("appList", "Error gson.fromJson data", e)
                     // handle exception
                 }
 
             } catch (e: Exception) {
-                Log.e("loadNextData", "Error loading next data", e)
+                Log.e("appList", "Error loading next data", e)
             }
         }
         pageCount++

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_dark_theme"
+    android:background="@drawable/account_card_background"
     tools:context=".GameListFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -39,7 +39,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="50dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/genresRecyclerView"

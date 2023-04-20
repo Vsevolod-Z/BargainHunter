@@ -30,7 +30,7 @@ class GenresRecycleViewAdapter(private  val con: Context,fragment: GameListFragm
      private var genres: MutableList<Genres> = mutableListOf()
     var isLoading = false
 
-    var selectedGenres: MutableList<Genres> = mutableListOf()
+    var selectedGenres: MutableList<Int> = mutableListOf()
 
     public fun addGenres(genreList: MutableList<Genres>){
     genres.addAll( genreList )
@@ -53,13 +53,13 @@ class GenresRecycleViewAdapter(private  val con: Context,fragment: GameListFragm
 
         holder.card.setOnClickListener {
 
-            if( genres[position] in selectedGenres){
-                selectedGenres.removeAll(setOf(genres[position]))
-                holder.linearLayout.setBackgroundResource(R.drawable.tab_background)
+            if( genres[position].id in selectedGenres){
+                selectedGenres.removeAll(setOf(genres[position].id))
+                holder.linearLayout.setBackgroundColor(context.getColor(R.color.TabDarkTheme))
                 fragment.ResetPageCount(1)
             }else{
-                selectedGenres.add(genres[position])
-                holder.linearLayout.setBackgroundColor(R.drawable.card_background)
+                selectedGenres.add(genres[position].id)
+                holder.linearLayout.setBackgroundColor(context.getColor(R.color.dark_title_color))
                 fragment.ResetPageCount(1)
             }
         }

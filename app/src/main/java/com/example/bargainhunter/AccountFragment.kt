@@ -1,23 +1,32 @@
 package com.example.bargainhunter
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import com.example.bargainhunter.models.App
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.client.DefaultHttpClient
 import org.json.JSONObject
@@ -39,6 +48,14 @@ class AccountFragment : Fragment() {
     private var param2: String? = null
     private lateinit var myView: View
     private lateinit var webView: WebView
+    private lateinit var yearsCard: CardView
+    private lateinit var avatarCard: CardView
+    private lateinit var lvlCard: CardView
+    private lateinit var tvYears: TextView
+    private lateinit var tvLVL: TextView
+    private lateinit var nickName: TextView
+    private lateinit var icon: ImageView
+    private lateinit var closeButtonLayout: ConstraintLayout
     var serverUrl = "http://109.254.9.58:8080"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,31 +69,95 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        var yearsCard = view.findViewById<CardView>(R.id.yearsCard)
-        var lvlCard = view.findViewById<CardView>(R.id.lvlCard)
+        yearsCard = view.findViewById<CardView>(R.id.yearsCard)
+        avatarCard = view.findViewById<CardView>(R.id.avatarCard)
+        lvlCard = view.findViewById<CardView>(R.id.lvlCard)
         var steamCard = view.findViewById<CardView>(R.id.steamCard)
         var discordCard = view.findViewById<CardView>(R.id.discordCard)
         var vkCard = view.findViewById<CardView>(R.id.vkCard)
         var telegramCard = view.findViewById<CardView>(R.id.telegramCard)
 
-        var tvYears = view.findViewById<TextView>(R.id.textViewYearsNum)
-        var tvLVL = view.findViewById<TextView>(R.id.textViewLvlNum)
-        var nickName = view.findViewById<TextView>(R.id.textViewNickName)
-        var icon = view.findViewById<ImageView>(R.id.steamAvatar)
 
+        var closeButton = view.findViewById<Button>(R.id.webCloseButton)
+        closeButtonLayout = view.findViewById<ConstraintLayout>(R.id.closeButtonLayout)
+        closeButton.setOnClickListener{
+            webView.loadUrl("about:blank")
+            webView.visibility=View.GONE
+            closeButtonLayout.visibility=View.GONE
+        }
+        tvYears = view.findViewById<TextView>(R.id.textViewYearsNum)
+        tvLVL = view.findViewById<TextView>(R.id.textViewLvlNum)
+        nickName = view.findViewById<TextView>(R.id.textViewNickName)
+        icon = view.findViewById<ImageView>(R.id.steamAvatar)
+        yearsCard.visibility = View.INVISIBLE
+        lvlCard.visibility = View.INVISIBLE
+        avatarCard.visibility = View.INVISIBLE
         webView = view.findViewById(R.id.webView)
+        setUserData()
 
 
 
         steamCard.setOnClickListener {
             openWebView()
+            closeButtonLayout.isVisible=true
             webView.isVisible = true
 
         }
     }
+    private fun setUserData(){
+        val prefs = context?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        if (prefs != null && prefs.getString("userId", "").toString() != "" ) {
+            imageDownloadAndSet(icon)
+            tvLVL.text=SteamUser.userData.player_level.toString()
+            tvYears.text=SteamUser.userData.years_of_service.toString()
+            nickName.text=SteamUser.userData.personaname
+            yearsCard.visibility = View.VISIBLE
+            lvlCard.visibility = View.VISIBLE
+            avatarCard.visibility = View.VISIBLE
+        }
+    }
+    private fun imageDownloadAndSet( icon:ImageView){
+
+        var bitmap: Bitmap
+        try {
+
+            Glide.with(myView.context).asBitmap().load(SteamUser.userData.avatarfull).into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: Transition<in Bitmap>?
+                ){
+                    bitmap = resource
+                    icon.setImageBitmap(bitmap)
+                }
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    // Очистка загрузки изображения
+                }
+            })
+
+        } catch (ex: Exception) {
+            Log.e("Exception", ex.toString())
+        }
+
+    }
     private fun openWebView() {
 
         webView.clearCache(true)
+        webView.settings.setJavaScriptEnabled(true)
+        webView.settings.setDomStorageEnabled(true)
+        webView.settings.setLoadsImagesAutomatically(true)
+        webView.settings.setLoadWithOverviewMode(true)
+        webView.settings.setUseWideViewPort(true)
+        webView.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == MotionEvent.ACTION_UP && webView.canGoBack()) {
+                webView.goBack()
+                return@OnKeyListener true
+            }
+            if(keyCode == KeyEvent.KEYCODE_BACK && event.action == MotionEvent.ACTION_UP && !webView.canGoBack()){
+                webView.visibility = View.GONE
+            }
+
+            false
+        })
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
@@ -90,9 +171,16 @@ class AccountFragment : Fragment() {
                     val uri = Uri.parse(url)
                     val identity = uri.getQueryParameter("openid.identity")
                     val steamId = identity?.replace("https://steamcommunity.com/openid/id/", "")
-                    webView.isVisible = false
+                    webView.visibility = View.GONE
+                    closeButtonLayout.visibility = View.GONE
                     webView.loadUrl("about:blank")
-                    Log.d("steamemum","steamId " + steamId)
+                    if (steamId != null) {
+                        SteamUser.updateUserID(myView.context,steamId)
+                        while (SteamUser.loading){
+
+                        }
+                        setUserData()
+                    }
                 }
                 return super.shouldOverrideUrlLoading(view, request)
             }
@@ -104,41 +192,7 @@ class AccountFragment : Fragment() {
 
 
     }
-    class MyWebViewClient : WebViewClient() {
 
-
-        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            Log.d("steamemum","url: "+ url)
-            if (url != null) {
-                if ( url.startsWith("https://steamcommunity.com") || url.startsWith("https://steamcommunity.com") ) {
-                    view?.context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                    return true
-                }
-            }
-            if (url?.startsWith("http://109.254.9.58:8080/auth/steamdata?openid.ns") == true) {
-                // URL-адрес начинается с нужной строки, загружаем содержимое страницы
-                val httpClient = DefaultHttpClient()
-                val httpGet = HttpGet(url)
-                val response = httpClient.execute(httpGet)
-                val inputStream = response.entity.content
-
-                // Извлекаем JSON из тела ответа
-                val jsonString = inputStream.bufferedReader().use(BufferedReader::readText)
-                val jsonObject = JSONObject(jsonString)
-
-
-                Log.d("steamemum","jsonObject: "+ jsonObject)
-                // Делаем что-то с полученным JSON
-
-                // Возвращаем true, чтобы сообщить WebView, что мы обработали этот URL-адрес
-                return true
-            }
-
-            // Возвращаем false, чтобы WebView обработала этот URL-адрес самостоятельно
-            return false
-        }
-
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
