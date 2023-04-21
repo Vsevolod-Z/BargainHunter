@@ -8,17 +8,10 @@
 
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/TabDarkTheme</item>
         <!-- Customize your theme here. -->
         <item name="android:editTextColor">@color/blue</item>
         <item name="android:textColorHint">@color/blue</item>
     </style>
-    <style name="CustomButtonStyle" parent="Widget.AppCompat.Button">
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:background">@color/price_card_background</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
+
 </resources>

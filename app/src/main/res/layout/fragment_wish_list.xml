@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/account_card_background"
+    android:background="@drawable/background_account_page"
     tools:context=".WishListFragment">
 
     <LinearLayout
@@ -15,23 +15,24 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:cardCornerRadius="5dp">
+            android:background="@drawable/wishlist_title_background"
+            app:cardBackgroundColor="#00FFFFFF"
+            app:cardElevation="0dp">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/account_card_background"
-                android:fontFamily="@font/new_zelek"
+                android:background="@drawable/wishlist_title_background"
+                android:fontFamily="@font/ubuntu_bold"
                 android:gravity="center"
                 android:text="Список желаемого:"
                 android:textAlignment="center"
+                android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="28sp" />
+                android:textSize="28sp"
+                android:textStyle="italic" />
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView

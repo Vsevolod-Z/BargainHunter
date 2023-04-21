@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridView
+import android.widget.ImageButton
+import android.widget.SearchView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bargainhunter.models.App
@@ -36,10 +40,22 @@ private const val ARG_PARAM2 = "param2"
 class GameListFragment() : Fragment() {
     var pageCount = 1
     private lateinit var myView: View
+
     private lateinit var recyclerView: RecyclerView
-    private lateinit var genresRecyclerView: RecyclerView
+
+
+    private lateinit var genresGridView: GridView
+
+    private lateinit var confirmCardView: CardView
+    private lateinit var filterButton: ImageButton
+
+    private lateinit var searchView: SearchView
+
+
+
+    private lateinit var genresGridViewAdapter: GenresGridViewAdapter
     lateinit var adapter : MainRecycleViewAdapter
-    lateinit var  genreAdapter : GenresRecycleViewAdapter
+
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -57,16 +73,26 @@ class GameListFragment() : Fragment() {
         // Inflate the layout for this fragment
         myView = inflater.inflate(R.layout.fragment_game_list, container, false)
         recyclerView = myView.findViewById<RecyclerView>(R.id.rcV)
-        genresRecyclerView = myView.findViewById<RecyclerView>(R.id.genresRecyclerView)
+
+
+        filterButton = myView.findViewById(R.id.filterButton)
+        genresGridView = myView.findViewById(R.id.genresGridView)
+        confirmCardView = myView.findViewById(R.id.genresConfirmCardView)
+        searchView = myView.findViewById(R.id.searchView)
+
+
+        genresGridViewAdapter = GenresGridViewAdapter(myView.context,this)
+
+        genresGridView.adapter = genresGridViewAdapter
+
 
         adapter = MainRecycleViewAdapter(myView.context, mutableListOf())
-        genreAdapter = GenresRecycleViewAdapter(myView.context,this)
-        loadGenres(genreAdapter)
+        loadGenres(genresGridViewAdapter)
         recyclerView.adapter = adapter
-        genresRecyclerView.adapter = genreAdapter
+
 
         recyclerView.layoutManager = LinearLayoutManager(myView.context)
-        genresRecyclerView.layoutManager = LinearLayoutManager(myView.context, LinearLayoutManager.HORIZONTAL, false)
+
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -88,6 +114,24 @@ class GameListFragment() : Fragment() {
             }
         })
         loadNextData( )
+
+        filterButton.setOnClickListener{
+            searchView.visibility = View.GONE
+            filterButton.visibility = View.GONE
+            recyclerView.visibility = View.GONE
+            genresGridView.visibility = View.VISIBLE
+            confirmCardView.visibility = View.VISIBLE
+        }
+        confirmCardView.setOnClickListener{
+            ResetPageCount(1)
+            searchView.visibility = View.VISIBLE
+            filterButton.visibility = View.VISIBLE
+            recyclerView.visibility = View.VISIBLE
+            genresGridView.visibility = View.GONE
+            confirmCardView.visibility = View.GONE
+
+        }
+
         return myView
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,7 +144,7 @@ class GameListFragment() : Fragment() {
 
 
     }
-    fun loadGenres(adapter: GenresRecycleViewAdapter){
+    fun loadGenres(adapter: GenresGridViewAdapter){
         val client = OkHttpClient()
         var request = Request.Builder()
             .url("http://109.254.9.58:8080/api/apps/getGenres")
@@ -131,7 +175,7 @@ class GameListFragment() : Fragment() {
     fun loadNextData() {
         // Загрузить следующую порцию данных из API или из другого источника
         // ...
-        val genres = genreAdapter.selectedGenres.joinToString(",")
+        val genres = genresGridViewAdapter.selectedGenres.joinToString(",")
         val client = OkHttpClient()
         var request = Request.Builder()
             .url("http://109.254.9.58:8080/api/apps/getAppsPage?pageNum=" + pageCount + "&pageSize=" + 10 + "&genres="+genres)

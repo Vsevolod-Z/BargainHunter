@@ -10,17 +10,15 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/card_background"
         android:elevation="50dp"
         android:shadowColor="@color/black"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="2"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="15dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="8dp"
         app:contentPadding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,22 +29,25 @@
             android:id="@+id/genreLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/tab_background"
+            android:background="@color/TabDarkTheme"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvGenreTitle"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
                 android:fontFamily="@font/new_zelek"
+                android:foregroundGravity="center"
                 android:gravity="center"
-                android:text="Design \u0026 Illustration"
+                android:singleLine="true"
+                android:text="Design \u0026 IllustrationOOOO"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

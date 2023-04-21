@@ -4,52 +4,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/account_card_background"
+    android:background="@drawable/background_account_page"
     tools:context=".GameListFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+      >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:background="@drawable/wishlist_title_background">
 
-            <SearchView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/searchview_border"
-                android:editTextColor="@color/blue"
-                android:iconifiedByDefault="false"
-                android:layoutDirection="rtl"
-                android:queryHint="Введите название игры..."
-                android:searchIcon="@drawable/outline_search_24"
-                android:textColor="@color/blue"
-                android:title="@string/search_title"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/genresConfirmCardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="#00FFFFFF"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/new_zelek"
+                    android:gravity="center"
+                    android:text="Применить"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF" />
+            </androidx.cardview.widget.CardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/genresRecyclerView"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="354dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/searchview_border"
+                    android:editTextColor="#FFFFFF"
+                    android:iconifiedByDefault="false"
+                    android:layoutDirection="rtl"
+                    android:queryHint="Введите название игры..."
+                    android:searchIcon="@drawable/outline_search_24"
+                    android:textColor="#FFFFFF"
+                    android:title="@string/search_title">
+
+                </SearchView>
+
+                <ImageButton
+                    android:id="@+id/filterButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_weight="1"
+                    android:background="#00D32222"
+                    android:src="@drawable/outline_filter_alt_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,6 +106,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <GridView
+                android:id="@+id/genresGridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="5dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

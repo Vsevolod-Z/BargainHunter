@@ -77,12 +77,6 @@ class WishListFragment : Fragment() {
             recyclerView.layoutManager = LinearLayoutManager(myView.context)
             recyclerView.adapter = adapter
             adapter.notifyDataSetChanged()
-        }else {
-            Toast.makeText(
-                context,
-                "Войдите в стим, либо измените настройки приватности",
-                Toast.LENGTH_SHORT
-            ).show()
         }
 
     }

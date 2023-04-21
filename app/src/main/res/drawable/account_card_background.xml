@@ -4,5 +4,5 @@
     <gradient
         android:startColor="@color/TabDarkTheme"
         android:endColor="#085895"
-        android:angle="90" />
+        android:angle="135" />
 </shape>

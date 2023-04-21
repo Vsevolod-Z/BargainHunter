@@ -30,8 +30,7 @@ class WishListRecycleViewAdapter(private  val con: Context) : RecyclerView.Adapt
 
     init{
         context = con
-        wishList= SteamUser.userData.apps
-    }
+        wishList= SteamUser.userData.apps    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishListViewHolder {
         // Создаем ViewHolder для элемента списка
         val view = LayoutInflater.from(parent.context).inflate(R.layout.main_recycleview_item, parent, false)
