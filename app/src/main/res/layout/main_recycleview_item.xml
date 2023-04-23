@@ -148,27 +148,28 @@
                     android:background="@drawable/like_background">
 
                     <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="33dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
+                        android:id="@+id/likeImageView"
+                        android:layout_width="42dp"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toEndOf="@+id/tvRating"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.346"
-                        app:srcCompat="@drawable/like" />
+                        app:srcCompat="@drawable/like_outline" />
 
                     <TextView
                         android:id="@+id/tvRating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_width="51dp"
+                        android:layout_height="31dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp"
                         android:fontFamily="@font/techno_race_italic"
+                        android:gravity="center"
                         android:text="88%"
                         android:textAlignment="center"
                         android:textColor="#00FE1A"

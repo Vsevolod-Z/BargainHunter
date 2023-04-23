@@ -116,7 +116,22 @@ class GameListFragment() : Fragment() {
             searchView.clearFocus()
             recyclerView.visibility = View.VISIBLE
         }
+        filterButton.setOnClickListener{
+            searchView.visibility = View.GONE
+            filterButton.visibility = View.GONE
+            recyclerView.visibility = View.GONE
+            genresGridView.visibility = View.VISIBLE
+            confirmCardView.visibility = View.VISIBLE
+        }
+        confirmCardView.setOnClickListener{
+            ResetPageCount(1)
+            searchView.visibility = View.VISIBLE
+            filterButton.visibility = View.VISIBLE
+            recyclerView.visibility = View.VISIBLE
+            genresGridView.visibility = View.GONE
+            confirmCardView.visibility = View.GONE
 
+        }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
@@ -154,22 +169,7 @@ class GameListFragment() : Fragment() {
         })
         loadNextData( )
 
-        filterButton.setOnClickListener{
-            searchView.visibility = View.GONE
-            filterButton.visibility = View.GONE
-            recyclerView.visibility = View.GONE
-            genresGridView.visibility = View.VISIBLE
-            confirmCardView.visibility = View.VISIBLE
-        }
-        confirmCardView.setOnClickListener{
-            ResetPageCount(1)
-            searchView.visibility = View.VISIBLE
-            filterButton.visibility = View.VISIBLE
-            recyclerView.visibility = View.VISIBLE
-            genresGridView.visibility = View.GONE
-            confirmCardView.visibility = View.GONE
 
-        }
 
         return myView
     }

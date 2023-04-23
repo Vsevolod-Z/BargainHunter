@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var handler: Handler
 
+    override fun onResume() {
+        super.onResume()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         val sharedPref = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
       /*  val editor = sharedPref.edit()
@@ -43,8 +46,6 @@ class MainActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
             )
             Thread {
-                // Инициализация данных
-                // ...
                 SteamUser.getUserData(this)
                 while (!SteamUser.isInitialized){}
                     handler.post {
@@ -56,9 +57,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
-    }
-    fun off(){
 
     }
     private  fun initial(){
