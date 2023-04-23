@@ -48,15 +48,13 @@ class AccountFragment : Fragment() {
     private var param2: String? = null
     private lateinit var myView: View
     private lateinit var webView: WebView
-    private lateinit var yearsCard: CardView
     private lateinit var avatarCard: CardView
-    private lateinit var lvlCard: CardView
-    private lateinit var tvYears: TextView
-    private lateinit var tvLVL: TextView
     private lateinit var nickName: TextView
+    private lateinit var tvYears: TextView
+    private lateinit var tvLvL: TextView
     private lateinit var icon: ImageView
     private lateinit var closeButtonLayout: ConstraintLayout
-    var serverUrl = "http://109.254.9.58:8080"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,14 +67,16 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        yearsCard = view.findViewById<CardView>(R.id.yearsCard)
+
         avatarCard = view.findViewById<CardView>(R.id.avatarCard)
-        lvlCard = view.findViewById<CardView>(R.id.lvlCard)
+
         var steamCard = view.findViewById<CardView>(R.id.steamCard)
         var discordCard = view.findViewById<CardView>(R.id.discordCard)
         var vkCard = view.findViewById<CardView>(R.id.vkCard)
         var telegramCard = view.findViewById<CardView>(R.id.telegramCard)
 
+        tvYears = view.findViewById<TextView>(R.id.tvYears)
+        tvLvL = view.findViewById<TextView>(R.id.tvLvL)
 
         var closeButton = view.findViewById<Button>(R.id.webCloseButton)
         closeButtonLayout = view.findViewById<ConstraintLayout>(R.id.closeButtonLayout)
@@ -84,13 +84,12 @@ class AccountFragment : Fragment() {
             webView.loadUrl("about:blank")
             webView.visibility=View.GONE
             closeButtonLayout.visibility=View.GONE
+
         }
-        tvYears = view.findViewById<TextView>(R.id.textViewYearsNum)
-        tvLVL = view.findViewById<TextView>(R.id.textViewLvlNum)
+
         nickName = view.findViewById<TextView>(R.id.textViewNickName)
         icon = view.findViewById<ImageView>(R.id.steamAvatar)
-        yearsCard.visibility = View.INVISIBLE
-        lvlCard.visibility = View.INVISIBLE
+
         avatarCard.visibility = View.INVISIBLE
         webView = view.findViewById(R.id.webView)
         setUserData()
@@ -99,6 +98,9 @@ class AccountFragment : Fragment() {
 
         steamCard.setOnClickListener {
             openWebView()
+            avatarCard.visibility = View.INVISIBLE
+            webView.bringToFront()
+            closeButtonLayout.bringToFront()
             closeButtonLayout.isVisible=true
             webView.isVisible = true
 
@@ -106,14 +108,16 @@ class AccountFragment : Fragment() {
     }
     private fun setUserData(){
         val prefs = context?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        Log.d("account","userId"+ prefs!!.getString("userId", "").toString())
         if (prefs != null && prefs.getString("userId", "").toString() != "" ) {
             imageDownloadAndSet(icon)
-            tvLVL.text=SteamUser.userData.player_level.toString()
-            tvYears.text=SteamUser.userData.years_of_service.toString()
+            tvYears.text =  myView.context.getString(R.string.account_years,SteamUser.userData.years_of_service.toString())
+            tvLvL.text =  myView.context.getString(R.string.account_lvl,SteamUser.userData.player_level.toString())
             nickName.text=SteamUser.userData.personaname
-            yearsCard.visibility = View.VISIBLE
-            lvlCard.visibility = View.VISIBLE
             avatarCard.visibility = View.VISIBLE
+            tvYears.visibility = View.VISIBLE
+            tvLvL.visibility = View.VISIBLE
+
         }
     }
     private fun imageDownloadAndSet( icon:ImageView){

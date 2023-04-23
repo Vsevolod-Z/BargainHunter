@@ -29,7 +29,7 @@
             android:id="@+id/genreLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/TabDarkTheme"
+            android:background="@color/tab_color"
             android:orientation="vertical">
 
             <TextView

@@ -20,19 +20,24 @@
             app:cardBackgroundColor="#00FFFFFF"
             app:cardElevation="0dp">
 
+
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/wishlist_title_background"
-                android:fontFamily="@font/ubuntu_bold"
-                android:gravity="center"
+
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/gamielist_title_background"
+                android:fontFamily="@font/new_zelek"
+                android:gravity="bottom|center"
                 android:text="Список желаемого:"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="28sp"
+                android:textSize="16sp"
                 android:textStyle="italic" />
+
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView

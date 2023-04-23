@@ -18,7 +18,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/wishlist_title_background">
+            android:background="@drawable/gamielist_title_background">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/genresConfirmCardView"
@@ -59,6 +59,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <ImageView
+                    android:id="@+id/searchBackButton"
+                    android:layout_width="41dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/abc_vector_test"
+                    android:visibility="gone"
+                    tools:visibility="gone" />
+
                 <SearchView
                     android:id="@+id/searchView"
                     android:layout_width="354dp"
@@ -97,6 +105,17 @@
             android:id="@+id/rcvConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchViewRCV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcV"

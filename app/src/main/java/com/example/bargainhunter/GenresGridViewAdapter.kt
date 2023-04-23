@@ -51,7 +51,7 @@ class GenresGridViewAdapter(private val context: Context, private val fragment: 
         holder.card.setOnClickListener {
             if (genres[position].id in selectedGenres) {
                 selectedGenres.removeAll(setOf(genres[position].id))
-                holder.linearLayout.setBackgroundColor(context.getColor(R.color.TabDarkTheme))
+                holder.linearLayout.setBackgroundColor(context.getColor(R.color.tab_color))
 
             } else {
                 selectedGenres.add(genres[position].id)

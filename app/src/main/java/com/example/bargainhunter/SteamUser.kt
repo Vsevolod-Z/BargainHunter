@@ -25,6 +25,7 @@ class SteamUser {
         var isInitialized:Boolean = false
         lateinit var userData: SteamUserData
         lateinit var userID: String
+        var serverUrl = "109.254.9.58:8080"
         fun getUserData(context: Context){
             val prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
             userID = prefs.getString("userId", "").toString()
@@ -37,7 +38,7 @@ class SteamUser {
                     prefs.edit().remove("userId").remove("timestamp").apply()
                     Toast.makeText(
                         context,
-                        "Даннеы пользователя устерели , пожалуйста войдите в стим заново!",
+                        "Данные пользователя устерели , пожалуйста войдите в стим заново!",
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -49,9 +50,9 @@ class SteamUser {
         private fun getSteamData(){
             val client = OkHttpClient()
             val request = Request.Builder()
-                .url("http://109.254.9.58:8080/auth/steamdata?steamid=$userID")
+                .url("http://$serverUrl/auth/steamdata?steamid=$userID")
                 .build()
-            Log.d("steam", "url:  http://109.254.9.58:8080/auth/steamdata?steamid=$userID")
+            Log.d("steam", "url:  http://$serverUrl/auth/steamdata?steamid=$userID")
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     val response = client.newCall(request).execute()
@@ -88,7 +89,7 @@ class SteamUser {
             val wishList = userData.wishlist.joinToString(",")
             val client = OkHttpClient()
             var request = Request.Builder()
-                .url("http://109.254.9.58:8080/api/apps/findByIds?appids=${wishList}")
+                .url("http://$serverUrl/api/apps/findByIds?appids=${wishList}")
                 .build()
             Log.d("steam", "loadWishListAppData url: " + request.url)
             CoroutineScope(Dispatchers.IO).launch {

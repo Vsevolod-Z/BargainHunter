@@ -3,14 +3,17 @@ package com.example.bargainhunter
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.GridView
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.SearchView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bargainhunter.models.App
@@ -27,6 +30,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.IOException
 
+
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -42,6 +46,7 @@ class GameListFragment() : Fragment() {
     private lateinit var myView: View
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var searchRecylerView: RecyclerView
 
 
     private lateinit var genresGridView: GridView
@@ -50,11 +55,13 @@ class GameListFragment() : Fragment() {
     private lateinit var filterButton: ImageButton
 
     private lateinit var searchView: SearchView
+    private lateinit var searchBack: ImageView
 
 
 
     private lateinit var genresGridViewAdapter: GenresGridViewAdapter
     lateinit var adapter : MainRecycleViewAdapter
+    lateinit var searchAdapter : SearchRecycleViewAdapter
 
 
     // TODO: Rename and change types of parameters
@@ -72,16 +79,20 @@ class GameListFragment() : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         myView = inflater.inflate(R.layout.fragment_game_list, container, false)
+
         recyclerView = myView.findViewById<RecyclerView>(R.id.rcV)
+        searchRecylerView = myView.findViewById<RecyclerView>(R.id.searchViewRCV)
 
 
         filterButton = myView.findViewById(R.id.filterButton)
         genresGridView = myView.findViewById(R.id.genresGridView)
         confirmCardView = myView.findViewById(R.id.genresConfirmCardView)
         searchView = myView.findViewById(R.id.searchView)
+        searchBack = myView.findViewById<ImageView>(R.id.searchBackButton)
 
 
         genresGridViewAdapter = GenresGridViewAdapter(myView.context,this)
+        searchAdapter = SearchRecycleViewAdapter(myView.context)
 
         genresGridView.adapter = genresGridViewAdapter
 
@@ -90,10 +101,38 @@ class GameListFragment() : Fragment() {
         loadGenres(genresGridViewAdapter)
         recyclerView.adapter = adapter
 
+        searchRecylerView.layoutManager = LinearLayoutManager(myView.context)
+        searchRecylerView.adapter=searchAdapter
 
         recyclerView.layoutManager = LinearLayoutManager(myView.context)
 
 
+        searchBack.setOnClickListener {
+            // Здесь можно обработать нажатие на кнопку крестика
+            // Например, очистить содержимое SearchView
+            searchView.setQuery("", false)
+            searchRecylerView.visibility = View.GONE
+            searchBack.visibility = View.GONE
+            searchView.clearFocus()
+            recyclerView.visibility = View.VISIBLE
+        }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrEmpty()) {
+                    recyclerView.visibility = View.GONE
+                    searchRecylerView.visibility = View.VISIBLE
+                    searchBack.visibility = View.VISIBLE
+                    searchApps(searchAdapter,query)
+                    return true
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+              return false
+            }
+        })
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -143,6 +182,34 @@ class GameListFragment() : Fragment() {
         }
 
 
+    }
+    fun searchApps(adapter: SearchRecycleViewAdapter,query:String){
+        val client = OkHttpClient()
+        var request = Request.Builder()
+            .url("http://109.254.9.58:8080/api/apps/findByTitle?title=$query")
+            .build()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = client.newCall(request).execute()
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                val responseString = response.body!!.string()
+                Log.d("gameList", "searchApps: ${responseString}")
+                val gson: Gson = GsonBuilder().create()
+
+                var apps:MutableList<App>  = gson.fromJson(responseString, object : TypeToken<List<App>>() {}.type)
+                // Добавить новые данные в список адаптера
+                withContext(Dispatchers.Main) {
+                    adapter.updateAppList(apps)
+                    adapter.notifyDataSetChanged()
+                    // Скрыть индикатор загрузки
+
+                }
+
+
+            } catch (e: Exception) {
+                Log.e("loadNextData", "Error loading next data", e)
+            }
+        }
     }
     fun loadGenres(adapter: GenresGridViewAdapter){
         val client = OkHttpClient()
@@ -210,6 +277,7 @@ class GameListFragment() : Fragment() {
         }
         pageCount++
     }
+
 
 
     companion object {

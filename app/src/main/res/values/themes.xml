@@ -8,7 +8,7 @@
 
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/TabDarkTheme</item>
+        <item name="android:statusBarColor">@color/main_color</item>
         <!-- Customize your theme here. -->
         <item name="android:editTextColor">@color/blue</item>
         <item name="android:textColorHint">@color/blue</item>
