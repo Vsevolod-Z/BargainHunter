@@ -1,6 +1,7 @@
 package com.example.bargainhunter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -19,6 +20,10 @@ import com.example.bargainhunter.models.App
 
 class GameDataPreparer {
     companion object{
+        fun openApp(context:Context){
+            val intent = Intent(context, AppPageActivity::class.java)
+            context.startActivity(intent)
+        }
         public fun calculateRating(
           app:App,
             tvRating: TextView,

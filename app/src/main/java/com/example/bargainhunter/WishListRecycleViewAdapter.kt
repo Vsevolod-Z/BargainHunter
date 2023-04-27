@@ -1,39 +1,56 @@
 package com.example.bargainhunter
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.util.Log
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import androidx.core.content.res.ResourcesCompat
 import com.example.bargainhunter.models.App
 
 
-class WishListRecycleViewAdapter(private  val con: Context) : RecyclerView.Adapter<WishListRecycleViewAdapter.WishListViewHolder>(){
+class WishListRecycleViewAdapter(private var con: Context,var wishListFragment: WishListFragment) : RecyclerView.Adapter<WishListRecycleViewAdapter.WishListViewHolder>(){
 
+    companion object{
+        private var adapterInstance: WishListRecycleViewAdapter? = null
         lateinit var  wishList: MutableList<App>
+        fun updateWishList(){
+            if(SteamUser.userData.apps != null) {
+                wishList = SteamUser.userData.apps
+                adapterInstance?.notifyDataSetChanged()
+            }
+            else{
+                wishList = mutableListOf()
+                adapterInstance?.notifyDataSetChanged()
+            }
+        }
+    }
+
+    private lateinit var view: View
 
     val context:Context
 
     init{
+        adapterInstance = this
         context = con
-        wishList= SteamUser.userData.apps    }
+        if(SteamUser.userData.apps != null)
+        {
+        wishList= SteamUser.userData.apps
+        }
+        else{
+            wishList = mutableListOf()
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishListViewHolder {
         // Создаем ViewHolder для элемента списка
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.main_recycleview_item, parent, false)
+        view = LayoutInflater.from(parent.context).inflate(R.layout.main_recycleview_item, parent, false)
 
         return WishListViewHolder(view)
     }
@@ -47,7 +64,9 @@ class WishListRecycleViewAdapter(private  val con: Context) : RecyclerView.Adapt
         GameDataPreparer.calculateRating(  wishList[position],holder.rating,holder.likeImage,context)
         GameDataPreparer.sortPrices(wishList[position])
         GameDataPreparer.fillGameData(wishList[position],holder.discount,holder.discountLayout,holder.initialPrice,holder.finalPrice,context)
-
+        holder.appCard.setOnClickListener{
+            GameDataPreparer.openApp(view.context)
+        }
     }
 
 
@@ -63,5 +82,6 @@ class WishListRecycleViewAdapter(private  val con: Context) : RecyclerView.Adapt
         var priceLayout = itemView.findViewById<ConstraintLayout>(R.id.priceConstraintLayout)
         var bottomPanelLayout = itemView.findViewById<LinearLayout>(R.id.linerLayoutBottom)
         var likeImage = itemView.findViewById<ImageView>(R.id.likeImageView)
+        var appCard = itemView.findViewById<CardView>(R.id.appCard)
     }
 }

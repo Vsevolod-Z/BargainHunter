@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BargainHunter</string>
+    <string name="app_name">Bargain Hunter</string>
     <string name="search_title">Введите название игры</string>
     <string name="final_price">%dp</string>
     <string name="inital_price">%dp</string>
@@ -7,6 +7,8 @@
     <string name="rating_percent">%d%%</string>
     <string name="account_years">YEARS: %s</string>
     <string name="account_lvl">LVL: %s</string>
+    <string name="server_url"></string>
+    <string name="pagination_query">%s/api/apps/getAppsPage?pageNum=%d&amp;pageSize=%d&amp;genres=%s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

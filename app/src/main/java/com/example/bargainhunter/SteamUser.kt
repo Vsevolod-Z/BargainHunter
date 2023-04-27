@@ -86,33 +86,38 @@ class SteamUser {
             getSteamData()
         }
         fun loadWishListAppData(){
-            val wishList = userData.wishlist.joinToString(",")
-            val client = OkHttpClient()
-            var request = Request.Builder()
-                .url("http://$serverUrl/api/apps/findByIds?appids=${wishList}")
-                .build()
-            Log.d("steam", "loadWishListAppData url: " + request.url)
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val response = client.newCall(request).execute()
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-                    val responseString = response.body!!.string()
-                    Log.d("steam", "loadWishListAppData responseString: ${responseString}")
-                    val gson: Gson = GsonBuilder().create()
-
+            if(userData.wishlist != null) {
+                val wishList = userData.wishlist.joinToString(",")
+                val client = OkHttpClient()
+                var request = Request.Builder()
+                    .url("http://$serverUrl/api/apps/findByIds?appids=${wishList}")
+                    .build()
+                Log.d("steam", "loadWishListAppData url: " + request.url)
+                CoroutineScope(Dispatchers.IO).launch {
                     try {
-                       userData.apps = gson.fromJson(responseString, object : TypeToken<List<App>>() {}.type)
-                        // Добавить новые данные в список адаптера
-                    } catch (e: JsonSyntaxException) {
+                        val response = client.newCall(request).execute()
+                        if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                        val responseString = response.body!!.string()
+                        Log.d("steam", "loadWishListAppData responseString: ${responseString}")
+                        val gson: Gson = GsonBuilder().create()
 
-                        // handle exception
+                        try {
+                            userData.apps = gson.fromJson(responseString, object : TypeToken<List<App>>() {}.type)
+                            WishListRecycleViewAdapter.updateWishList()
+                            // Добавить новые данные в список адаптера
+                        } catch (e: JsonSyntaxException) {
+
+                            // handle exception
+                        }
+
+
+                    } catch (e: Exception) {
+                        Log.e("loadNextData", "Error loading next data", e)
                     }
-                    isInitialized = true
 
-                } catch (e: Exception) {
-                    Log.e("loadNextData", "Error loading next data", e)
                 }
             }
+            isInitialized = true
         }
 
     }

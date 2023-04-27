@@ -8,6 +8,7 @@
     android:layout_marginEnd="4dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/appCard"
         android:layout_width="394dp"
         android:layout_height="241dp"
         android:layout_marginStart="16dp"
