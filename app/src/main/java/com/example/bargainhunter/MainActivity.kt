@@ -1,6 +1,7 @@
 package com.example.bargainhunter
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +10,7 @@ import android.view.Window
 import android.view.WindowManager
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 
 import com.example.bargainhunter.databinding.ActivityMainBinding
 
@@ -20,6 +22,8 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 
 class MainActivity : AppCompatActivity() {
 
+
+
     var adapter: FragmentPagerItemAdapter? = null
     var pageCount = 1
     private lateinit var binding: ActivityMainBinding
@@ -30,11 +34,11 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         val sharedPref = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-      /*  val editor = sharedPref.edit()
+       /* val editor = sharedPref.edit()
         editor.clear()
         editor.apply()*/
         super.onCreate(savedInstanceState)
-        getSupportActionBar()?.hide()
+        supportActionBar?.hide()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initial()

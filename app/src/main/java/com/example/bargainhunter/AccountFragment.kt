@@ -58,10 +58,6 @@ class AccountFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -99,6 +95,8 @@ class AccountFragment : Fragment() {
         steamCard.setOnClickListener {
             openWebView()
             avatarCard.visibility = View.INVISIBLE
+            tvLvL.visibility = View.INVISIBLE
+            tvYears.visibility = View.INVISIBLE
             webView.bringToFront()
             closeButtonLayout.bringToFront()
             closeButtonLayout.isVisible=true
@@ -109,7 +107,7 @@ class AccountFragment : Fragment() {
     private fun setUserData(){
         val prefs = context?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         Log.d("account","userId"+ prefs!!.getString("userId", "").toString())
-        if (prefs != null && prefs.getString("userId", "").toString() != "" ) {
+        if (prefs.getString("userId", "").toString() != "") {
             imageDownloadAndSet(icon)
             tvYears.text =  myView.context.getString(R.string.account_years,SteamUser.userData.years_of_service.toString())
             tvLvL.text =  myView.context.getString(R.string.account_lvl,SteamUser.userData.player_level.toString())
@@ -124,18 +122,7 @@ class AccountFragment : Fragment() {
         var bitmap: Bitmap
         try {
 
-            Glide.with(myView.context).asBitmap().load(SteamUser.userData.avatarfull).into(object : CustomTarget<Bitmap>() {
-                override fun onResourceReady(
-                    resource: Bitmap,
-                    transition: Transition<in Bitmap>?
-                ){
-                    bitmap = resource
-                    icon.setImageBitmap(bitmap)
-                }
-                override fun onLoadCleared(placeholder: Drawable?) {
-                    // Очистка загрузки изображения
-                }
-            })
+            Glide.with(myView.context).asBitmap().load(SteamUser.userData.avatarfull).into(icon)
 
         } catch (ex: Exception) {
             Log.e("Exception", ex.toString())

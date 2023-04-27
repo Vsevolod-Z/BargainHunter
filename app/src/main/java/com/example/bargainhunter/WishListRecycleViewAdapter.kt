@@ -49,23 +49,20 @@ class WishListRecycleViewAdapter(private var con: Context,var wishListFragment: 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishListViewHolder {
-        // Создаем ViewHolder для элемента списка
         view = LayoutInflater.from(parent.context).inflate(R.layout.main_recycleview_item, parent, false)
-
         return WishListViewHolder(view)
     }
 
     override fun getItemCount() = wishList.size
 
     override fun onBindViewHolder(holder: WishListViewHolder, position: Int) {
-        // Заполняем ViewHolder данными из списка
         GameDataPreparer.imageDownloadAndSet(holder.img,holder.title,holder.bottomPanelLayout,wishList[position],context)
         holder.title.text = wishList[position].steamAppData.name
         GameDataPreparer.calculateRating(  wishList[position],holder.rating,holder.likeImage,context)
         GameDataPreparer.sortPrices(wishList[position])
         GameDataPreparer.fillGameData(wishList[position],holder.discount,holder.discountLayout,holder.initialPrice,holder.finalPrice,context)
         holder.appCard.setOnClickListener{
-            GameDataPreparer.openApp(view.context)
+            GameDataPreparer.openApp(view.context, wishList[position])
         }
     }
 

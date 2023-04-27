@@ -1,6 +1,7 @@
 package com.example.bargainhunter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -11,8 +12,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -64,7 +67,11 @@ class MainRecycleViewAdapter(private  val con: Context,private val appList: Muta
         GameDataPreparer.calculateRating(  appList[position],holder.rating,holder.likeImage,context)
         GameDataPreparer.sortPrices(appList[position])
         GameDataPreparer.fillGameData(appList[position],holder.discount,holder.discountLayout,holder.initialPrice,holder.finalPrice,context)
+        holder.appCard.setOnClickListener{
 
+             GameDataPreparer.openApp(context,appList[position])
+
+        }
     }
 
 
@@ -81,6 +88,6 @@ class MainRecycleViewAdapter(private  val con: Context,private val appList: Muta
         var priceLayout = itemView.findViewById<ConstraintLayout>(R.id.priceConstraintLayout)
         var bottomPanelLayout = itemView.findViewById<LinearLayout>(R.id.linerLayoutBottom)
         var likeImage = itemView.findViewById<ImageView>(R.id.likeImageView)
-
+        var appCard = itemView.findViewById<CardView>(R.id.appCard)
     }
 }

@@ -20,8 +20,11 @@ import com.example.bargainhunter.models.App
 
 class GameDataPreparer {
     companion object{
-        fun openApp(context:Context){
+       lateinit var appPageApp : App
+        fun openApp(context:Context,app:App){
+            appPageApp = app
             val intent = Intent(context, AppPageActivity::class.java)
+
             context.startActivity(intent)
         }
         public fun calculateRating(
@@ -74,6 +77,65 @@ class GameDataPreparer {
 
             prices.sorted()
             return prices
+        }
+        public fun imageDownloadAndSet(img:ImageView, app: App,context:Context){
+
+            var bitmap: Bitmap
+            try {
+
+                Glide.with(context).asBitmap().load(app.steamAppData.header_image).into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ){
+                        bitmap = resource
+                        img.setImageBitmap(bitmap)
+                    }
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // Очистка загрузки изображения
+                    }
+                })
+                Log.d("image","steamData"+app.steamAppData.header_image)
+            } catch (ex: Exception) {
+                Log.e("Exception", ex.toString())
+                Log.d("image","exception "+ex.toString())
+            }
+
+        }
+        public fun imageDownloadAndSet(img:ImageView,bottomPanelLayout:LinearLayout , app: App,context:Context){
+
+            var bitmap: Bitmap
+            var color: Int
+            var color2: Int
+
+            try {
+
+                Glide.with(context).asBitmap().load(app.steamAppData.header_image).into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ){
+                        bitmap = resource
+                        img.setImageBitmap(bitmap)
+                        color = bitmap.getPixel(0,bitmap.height-1)
+                        color2 = bitmap.getPixel(bitmap.width-1,bitmap.height-1)
+                        var colors = intArrayOf(color,color2)
+                        var gradient = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,colors)
+                        bottomPanelLayout.background=gradient
+
+
+
+                    }
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // Очистка загрузки изображения
+                    }
+                })
+                Log.d("image","steamData"+app.steamAppData.header_image)
+            } catch (ex: Exception) {
+                Log.e("Exception", ex.toString())
+                Log.d("image","exception "+ex.toString())
+            }
+
         }
         public fun imageDownloadAndSet(img:ImageView,title:TextView,bottomPanelLayout:LinearLayout , app: App,context:Context){
 
