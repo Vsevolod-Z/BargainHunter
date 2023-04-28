@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_dark_theme"
     tools:context=".AppPageActivity">
 
     <ScrollView
+        android:descendantFocusability="beforeDescendants"
+
+        android:id="@+id/appScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background_account_page"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,10 +20,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1200dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:id="@+id/iconConstraintLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="220dp"
@@ -33,6 +39,7 @@
                     android:id="@+id/cardView2"
                     android:layout_width="396dp"
                     android:layout_height="185dp"
+                    app:cardBackgroundColor="#00FFFFFF"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -86,12 +93,12 @@
                             android:textColor="#FFFFFF" />
 
                         <ImageView
-                            android:id="@+id/imageView8"
+                            android:id="@+id/winAvailabilityImage"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            app:srcCompat="@drawable/check_outline" />
+                            app:srcCompat="@drawable/cross_outline" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -124,7 +131,7 @@
                             android:textColor="#FFFFFF" />
 
                         <ImageView
-                            android:id="@+id/imageView10"
+                            android:id="@+id/macAvailabilityImage"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
@@ -162,17 +169,18 @@
                             android:textColor="#FFFFFF" />
 
                         <ImageView
-                            android:id="@+id/imageView12"
+                            android:id="@+id/linuxAvailabilityImage"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            app:srcCompat="@drawable/check_outline" />
+                            app:srcCompat="@drawable/cross_outline" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
+                android:focusable="false"
                 android:layout_width="396dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -190,7 +198,7 @@
                     <TextView
                         android:id="@+id/textView25"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="15dp"
                         android:layout_weight="1"
                         android:background="@drawable/developer_title_background"
                         android:fontFamily="@font/blue_curve"
@@ -201,22 +209,20 @@
 
                     <TextView
                         android:id="@+id/tvDeveloper"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="5dp"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:background="@drawable/developer_background"
                         android:fontFamily="@font/blue_curve"
                         android:gravity="center"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="Многобук,\nОченьМногобуквие"
+                        android:text="Ansid,\nОченьМногобуквиеdddddddddddd"
                         android:textAlignment="center"
                         android:textColor="#F8EEEE" />
                 </LinearLayout>
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
@@ -227,7 +233,7 @@
                     <TextView
                         android:id="@+id/textView24"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="15dp"
                         android:layout_weight="1"
                         android:background="@drawable/developer_title_background"
                         android:fontFamily="@font/blue_curve"
@@ -237,24 +243,617 @@
 
                     <TextView
                         android:id="@+id/tvPublisher"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="5dp"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:background="@drawable/developer_background"
                         android:fontFamily="@font/blue_curve"
                         android:gravity="center"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="Многобук,\nОченьМногобуквие"
+                        android:text="valve"
                         android:textAlignment="center"
                         android:textColor="#FFFFFF" />
                 </LinearLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:focusable="false"
+                android:layout_width="396dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/loadholder_background"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvAppRating"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/blue_curve"
+                    android:gravity="center"
+                    android:text="88%"
+                    android:textAlignment="center"
+                    android:textColor="#6AFF00"
+                    android:textSize="20sp" />
+
+                <ProgressBar
+                    android:id="@+id/ratingProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:progress="90"
+                    android:progressBackgroundTintMode="add"
+                    android:progressTint="@color/green" />
+
+                <ImageView
+                    android:id="@+id/likeImage"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingStart="2dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="2dp"
+                    app:srcCompat="@drawable/like_outline" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:focusable="false"
+                android:layout_width="396dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/app_page_icon_background"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/steamAppCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardBackgroundColor="@color/price_card_background"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/new_zelek"
+                            android:gravity="center"
+                            android:text="Steam"
+                            android:textAlignment="center"
+                            android:textColor="#F4F0F0" />
+
+                        <TextView
+                            android:id="@+id/tvSteamDiscount"
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/techno_race_italic"
+                            android:gravity="center"
+                            android:text="-98%"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/steamShareCard"
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/vk_icon_color">
+
+                            <TextView
+                                android:id="@+id/textView9"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/blue_curve"
+                                android:gravity="center"
+                                android:text="Поделиться"
+                                android:textAlignment="center"
+                                android:textColor="#EFEDED"
+                                android:textSize="12sp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/steamPriceCard"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/discord_icon_color"
+                            app:cardCornerRadius="0dp">
+
+                            <TextView
+                                android:id="@+id/tvSteamPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/blue_curve"
+                                android:gravity="center"
+                                android:text="-----"
+                                android:textAlignment="center"
+                                android:textColor="#EFEDED"
+                                android:textSize="12sp" />
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/steamBuyAppCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardBackgroundColor="@color/price_card_background"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/new_zelek"
+                            android:gravity="center"
+                            android:text="SteamBuy"
+                            android:textAlignment="center"
+                            android:textColor="#F4F0F0" />
+
+                        <TextView
+                            android:id="@+id/tvSteamBuyDiscount"
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/techno_race_italic"
+                            android:gravity="center"
+                            android:text="-98%"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/steamBuyShareCard"
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/vk_icon_color">
+
+                            <TextView
+                                android:id="@+id/textView13"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/blue_curve"
+                                android:gravity="center"
+                                android:text="Поделиться"
+                                android:textAlignment="center"
+                                android:textColor="#EFEDED"
+                                android:textSize="12sp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/steamBuyPriceCard"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/discord_icon_color"
+                            app:cardCornerRadius="0dp">
+
+                            <TextView
+                                android:id="@+id/tvSteamBuyPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/blue_curve"
+                                android:gravity="center"
+                                android:text="-----"
+                                android:textAlignment="center"
+                                android:textColor="#EFEDED"
+                                android:textSize="12sp" />
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/steamPayAppCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardBackgroundColor="@color/price_card_background"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/new_zelek"
+                            android:gravity="center"
+                            android:text="SteamPay"
+                            android:textAlignment="center"
+                            android:textColor="#F4F0F0" />
+
+                        <TextView
+                            android:id="@+id/tvSteamPayDiscount"
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/techno_race_italic"
+                            android:gravity="center"
+                            android:text="-98%"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/steamPayShareCard"
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/vk_icon_color">
+
+                            <TextView
+                                android:id="@+id/textView17"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/blue_curve"
+                                android:gravity="center"
+                                android:text="Поделиться"
+                                android:textAlignment="center"
+                                android:textColor="#EFEDED"
+                                android:textSize="12sp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/steamPayPriceCard"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/discord_icon_color"
+                            app:cardCornerRadius="0dp">
+
+                            <TextView
+                                android:id="@+id/tvSteamPayPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/blue_curve"
+                                android:gravity="center"
+                                android:text="-----"
+                                android:textAlignment="center"
+                                android:textColor="#EFEDED"
+                                android:textSize="12sp" />
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/gogAppCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardBackgroundColor="@color/price_card_background"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/new_zelek"
+                            android:gravity="center"
+                            android:text="GOG"
+                            android:textAlignment="center"
+                            android:textColor="#F4F0F0" />
+
+                        <TextView
+                            android:id="@+id/tvGOGDiscount"
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/techno_race_italic"
+                            android:gravity="center"
+                            android:text="-98%"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/gogShareCard"
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/vk_icon_color">
+
+                            <TextView
+                                android:id="@+id/textView33"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/blue_curve"
+                                android:gravity="center"
+                                android:text="Поделиться"
+                                android:textAlignment="center"
+                                android:textColor="#EFEDED"
+                                android:textSize="12sp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/gogPriceCard"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/discord_icon_color"
+                            app:cardCornerRadius="0dp">
+
+                            <TextView
+                                android:id="@+id/tvGOGPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/blue_curve"
+                                android:gravity="center"
+                                android:text="-----"
+                                android:textAlignment="center"
+                                android:textColor="#EFEDED"
+                                android:textSize="12sp" />
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:focusable="false"
+                android:layout_width="396dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/app_page_icon_background"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/developer_title_background"
+                    android:fontFamily="@font/blue_curve"
+                    android:text="Системные требования"
+                    android:textAlignment="center"
+                    android:textColor="#F4F0F0"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tvRequirements"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/blue_curve"
+                    android:textAlignment="center"
+                    android:textColor="#F6F2F2"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:focusable="false"
+                android:id="@+id/rcvScreenshot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:focusable="false"
+                android:layout_width="396dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/app_page_icon_background"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView44"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/developer_title_background"
+                    android:fontFamily="@font/blue_curve"
+                    android:text="Дата релиза:"
+                    android:textAlignment="center"
+                    android:textColor="#F4F0F0"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/blue_curve"
+                    android:gravity="center"
+                    android:text="19 Jan, 2016"
+                    android:textAlignment="center"
+                    android:textColor="#F6F2F2"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:focusable="false"
+                android:id="@+id/videoLayout"
+                android:layout_width="396dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@color/second_dark"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <VideoView
+                    android:id="@+id/videoView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:focusable="false"
+                android:id="@+id/dlcLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="396dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/developer_title_background"
+                    android:fontFamily="@font/blue_curve"
+                    android:gravity="center"
+                    android:text="DLC:"
+                    android:textAlignment="center"
+                    android:textColor="#F4F0F0"
+                    android:textSize="20sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvDLC"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:focusable="false"
+                android:id="@+id/graphLayout"
+                android:layout_width="396dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/line_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:focusable="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@color/second_dark"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:focusable="false"
+                android:id="@+id/achievementsLayout"
+                android:layout_width="396dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/screenshots_background"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/developer_title_background"
+                    android:fontFamily="@font/new_zelek"
+                    android:text="Достижения:"
+                    android:textAlignment="center"
+                    android:textColor="#FAF2F2" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvAchievements"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

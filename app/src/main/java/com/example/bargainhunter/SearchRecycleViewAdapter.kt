@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -27,6 +28,7 @@ class SearchRecycleViewAdapter(private  val con: Context) : RecyclerView.Adapter
     var  appList: List<App> = emptyList()
 
     val context:Context
+    private lateinit var view: View
 
     init{
         context = con
@@ -38,7 +40,7 @@ class SearchRecycleViewAdapter(private  val con: Context) : RecyclerView.Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecycleViewViewHolder {
         // Создаем ViewHolder для элемента списка
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.main_recycleview_item, parent, false)
+         view = LayoutInflater.from(parent.context).inflate(R.layout.main_recycleview_item, parent, false)
 
         return RecycleViewViewHolder(view)
     }
@@ -51,7 +53,9 @@ class SearchRecycleViewAdapter(private  val con: Context) : RecyclerView.Adapter
         GameDataPreparer.calculateRating(  appList[position],holder.rating,holder.likeImage,context)
         GameDataPreparer.sortPrices(appList[position])
         GameDataPreparer.fillGameData(appList[position],holder.discount,holder.discountLayout,holder.initialPrice,holder.finalPrice,context)
-
+        holder.appCard.setOnClickListener{
+            GameDataPreparer.openApp(view.context, appList[position])
+        }
     }
 
 
@@ -67,6 +71,7 @@ class SearchRecycleViewAdapter(private  val con: Context) : RecyclerView.Adapter
         var priceLayout = itemView.findViewById<ConstraintLayout>(R.id.priceConstraintLayout)
         var bottomPanelLayout = itemView.findViewById<LinearLayout>(R.id.linerLayoutBottom)
         var likeImage = itemView.findViewById<ImageView>(R.id.likeImageView)
+        var appCard = itemView.findViewById<CardView>(R.id.appCard)
 
     }
 }

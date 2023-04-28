@@ -7,5 +7,6 @@
     <string name="rating_percent">%d%%</string>
     <string name="account_years">YEARS: %s</string>
     <string name="account_lvl">LVL: %s</string>
+    <string name="review_num">Отзыв #%d</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

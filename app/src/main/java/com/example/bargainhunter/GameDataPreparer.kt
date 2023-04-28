@@ -2,19 +2,22 @@ package com.example.bargainhunter
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.util.Log
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.bargainhunter.models.App
 
@@ -22,10 +25,40 @@ class GameDataPreparer {
     companion object{
        lateinit var appPageApp : App
         fun openApp(context:Context,app:App){
+
             appPageApp = app
             val intent = Intent(context, AppPageActivity::class.java)
 
             context.startActivity(intent)
+        }
+        public fun calculateRating(
+            app:App,
+            tvRating: TextView,
+            likeImage: ImageView,
+            progressBar:ProgressBar,
+            context:Context
+        ) {
+            var rating = ((app.steamAppData.app_review.query_summary.total_positive.toDouble() / app.steamAppData.app_review.query_summary.total_reviews.toDouble() ) * 100).toInt()
+            if (rating!=0) {
+                likeImage.setScaleY(1f)
+                tvRating.text = context.getString(R.string.rating_percent, rating)
+                var color :Int
+                Log.d("GameDataPreparer","rating: " + rating)
+                if (rating >= 70) {
+                    color =  ContextCompat.getColor(context, R.color.like_positive)
+                } else if (rating >= 50) {
+                    color =  ContextCompat.getColor(context, R.color.like_neutral)
+
+                } else {
+                    color =  ContextCompat.getColor(context, R.color.like_negative)
+                    likeImage.setScaleY(-1f)
+
+                }
+                tvRating.setTextColor(color)
+                likeImage.setColorFilter(color)
+                progressBar.progressTintList = ColorStateList.valueOf(color)
+            }
+
         }
         public fun calculateRating(
           app:App,
@@ -37,18 +70,21 @@ class GameDataPreparer {
             if (rating!=0) {
                 likeImage.setScaleY(1f)
                 tvRating.text = context.getString(R.string.rating_percent, rating)
+                var color :Int
                 Log.d("GameDataPreparer","rating: " + rating)
                 if (rating >= 70) {
-                    tvRating.setTextColor(ContextCompat.getColor(context, R.color.like_positive))
-                    likeImage.setColorFilter(ContextCompat.getColor(context, R.color.like_positive))
+                    color =  ContextCompat.getColor(context, R.color.like_positive)
                 } else if (rating >= 50) {
-                    tvRating.setTextColor(ContextCompat.getColor(context, R.color.like_neutral))
-                   likeImage.setColorFilter(ContextCompat.getColor(context, R.color.like_neutral))
+                    color =  ContextCompat.getColor(context, R.color.like_neutral)
+
                 } else {
+                    color =  ContextCompat.getColor(context, R.color.like_negative)
                     likeImage.setScaleY(-1f)
-                    tvRating.setTextColor(ContextCompat.getColor(context, R.color.like_negative))
-                    likeImage.setColorFilter(ContextCompat.getColor(context, R.color.like_negative))
+
                 }
+                tvRating.setTextColor(color)
+                likeImage.setColorFilter(color)
+
             }
 
         }
@@ -56,8 +92,9 @@ class GameDataPreparer {
             return ((last - first).toFloat() / last * 100).toInt()
         }
         public  fun sortPrices(app: App): List<Int>{
-            var steamPrice = app.steamAppData.price_overview.final
-            var prices = mutableListOf<Int>(steamPrice)
+            var steamPriceInital = app.steamAppData.price_overview.initial
+            var steamPriceFinal = app.steamAppData.price_overview.final
+            var prices = mutableListOf<Int>(steamPriceFinal,steamPriceInital)
             if (app.steamPayAppData.prices.rub == 0) {
                 var payPrice = app.steamPayAppData.prices.rub
             } else {
@@ -187,8 +224,19 @@ class GameDataPreparer {
             }
 
         }
+        fun videoDownload(videoView:VideoView,url: String,context: Context){
+            val mediaController = MediaController(context)
+            mediaController.setAnchorView(videoView)
+            videoView.setMediaController(mediaController)
+            videoView.setVideoPath(url)
+            videoView.start()
+        }
+        fun imageDownloadAndSet(img:ImageView,url:String,context: Context){
 
 
+                Glide.with(context).asBitmap().load(url).into(img)
+
+        }
         fun fillGameData(
             app: App,
             tvDiscount: TextView,

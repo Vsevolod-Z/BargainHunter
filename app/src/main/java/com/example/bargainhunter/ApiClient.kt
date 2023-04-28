@@ -1,7 +1,11 @@
 package com.example.bargainhunter
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
+import android.view.View
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.bargainhunter.models.App
 import com.example.bargainhunter.models.Genres
 import com.google.gson.Gson
@@ -21,8 +25,9 @@ class ApiClient {
         val pageSize = 10
         val serverUrl = "http://109.254.9.58:8080"
         val paginationQuery = "%s/api/apps/getAppsPage?pageNum=%d&pageSize=%d&genres=%s"
-        val genresQuery = "${ApiClient.serverUrl}/api/apps/getGenres"
-        val searchAppsQuery = "${ApiClient.serverUrl}/api/apps/findByTitle?title=%s"
+        val genresQuery = "${serverUrl}/api/apps/getGenres"
+        val searchAppsQuery = "${serverUrl}/api/apps/findByTitle?title=%s"
+        val findByIdsQuery = "${serverUrl}/api/apps/findByIds?appids=%s"
         lateinit var genres:MutableList<Genres>
 
         fun searchApps(adapter: SearchRecycleViewAdapter,query:String){
@@ -117,6 +122,25 @@ class ApiClient {
                     Log.e("ApiClient", "Error loading next data", e)
                 }
             }
+        }
+        fun findByIds(ids: List<Int>): LiveData<List<App>> {
+            val resultLiveData = MutableLiveData<List<App>>()
+            val client = OkHttpClient()
+            val idsStr = ids.joinToString(",")
+            val request = Request.Builder().url(String.format(findByIdsQuery,idsStr)).build()
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val response = client.newCall(request).execute()
+                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                    val responseString = response.body!!.string()
+                    val gson: Gson = GsonBuilder().create()
+                    val apps = gson.fromJson<List<App>>(responseString, object : TypeToken<List<App>>() {}.type)
+                    resultLiveData.postValue(apps)
+                } catch (e: Exception) {
+                    Log.e("loadNextData", "Error loading next data", e)
+                }
+            }
+            return resultLiveData
         }
     }
 }

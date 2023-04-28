@@ -90,7 +90,7 @@ class SteamUser {
                 val wishList = userData.wishlist.joinToString(",")
                 val client = OkHttpClient()
                 var request = Request.Builder()
-                    .url("http://$serverUrl/api/apps/findByIds?appids=${wishList}")
+                    .url("${ApiClient.serverUrl}/api/apps/findByIds?appids=${wishList}")
                     .build()
                 Log.d("steam", "loadWishListAppData url: " + request.url)
                 CoroutineScope(Dispatchers.IO).launch {

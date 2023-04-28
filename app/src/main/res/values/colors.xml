@@ -22,6 +22,7 @@
     <color name="telegram_icon_color">#33aade</color>
 
     <color name="main_color">#2c4470</color>
+    <color name="second_dark">#1E3150</color>
     <color name="tab_color">#085996</color>
     <color name="like_positive">#2FFF00</color>
     <color name="like_neutral">#BFAF1E</color>
