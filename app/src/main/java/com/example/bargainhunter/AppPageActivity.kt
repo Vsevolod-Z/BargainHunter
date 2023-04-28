@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import java.lang.Math.abs
 
 
 class MonthAxisValueFormatter(private val months: List<String>) : ValueFormatter() {
@@ -165,22 +166,38 @@ class AppPageActivity : AppCompatActivity() {
         tvSteamPayDiscount = findViewById(R.id.tvSteamPayDiscount)
         tvGOGDiscount = findViewById(R.id.tvGOGDiscount)
         var sortPrices = GameDataPreparer.sortPrices(app)
-        var maxPrice: Int
-        if (sortPrices.last() > sortPrices.first()) {
-            maxPrice = sortPrices.last()
-        } else {
-            maxPrice = sortPrices.first()
-        }
+        var maxPrice = app.steamAppData.price_overview.initial
+        var discount : Int
         tvSteamDiscount.text = this.getString(R.string.discount_percent, GameDataPreparer.calculateDiscount(maxPrice,app.steamAppData.price_overview.final))
         if(app.steamBuyAppData.price.rub != "") {
-            tvSteamBuyDiscount.text = this.getString(R.string.discount_percent, GameDataPreparer.calculateDiscount(maxPrice,app.steamBuyAppData.price.rub.toInt()))
+             discount = GameDataPreparer.calculateDiscount(maxPrice,app.steamBuyAppData.price.rub.toInt())
+            if(discount >0) {
+                tvSteamBuyDiscount.text = this.getString(R.string.discount_percent, discount)
+            }else{
+                tvSteamBuyDiscount.text = this.getString(R.string.wrong_discount_percent, abs(discount))
+                tvSteamBuyDiscount.setTextColor(getColor(R.color.like_negative))
+            }
         }
 
         if(app.steamPayAppData.prices.rub != 0) {
-            tvSteamPayDiscount.text = this.getString(R.string.discount_percent, GameDataPreparer.calculateDiscount(maxPrice,app.steamPayAppData.prices.rub))
+             discount = GameDataPreparer.calculateDiscount(maxPrice,app.steamPayAppData.prices.rub)
+            if(discount >0) {
+                tvSteamPayDiscount.text = this.getString(R.string.discount_percent, GameDataPreparer.calculateDiscount(maxPrice,app.steamPayAppData.prices.rub))
+            }else{
+                tvSteamPayDiscount.text = this.getString(R.string.wrong_discount_percent, abs(discount))
+                tvSteamPayDiscount.setTextColor(getColor(R.color.like_negative))
+            }
+
         }
         if(app.gogAppData.price.finalAmount != "") {
-            tvGOGDiscount.text = this.getString(R.string.discount_percent, GameDataPreparer.calculateDiscount(maxPrice,app.gogAppData.price.finalAmount.toFloat().toInt()))
+            discount = GameDataPreparer.calculateDiscount(maxPrice,app.gogAppData.price.finalAmount.toFloat().toInt())
+            if(discount >0) {
+                tvGOGDiscount.text = this.getString(R.string.discount_percent, GameDataPreparer.calculateDiscount(maxPrice,app.steamPayAppData.prices.rub))
+            }else{
+                tvGOGDiscount.text = this.getString(R.string.wrong_discount_percent, abs(discount))
+                tvGOGDiscount.setTextColor(getColor(R.color.like_negative))
+            }
+
         }
 
 

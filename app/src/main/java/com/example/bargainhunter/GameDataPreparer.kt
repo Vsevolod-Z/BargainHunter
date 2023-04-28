@@ -107,7 +107,7 @@ class GameDataPreparer {
                 prices.add(buyPrice)
             }
             if (app.gogAppData.price.finalAmount.isNotEmpty()) {
-                var gogPrice = app.gogAppData.price.finalAmount.toFloat() * 82
+                var gogPrice = app.gogAppData.price.finalAmount.toFloat()
                 prices.add(gogPrice.toInt())
             }
 

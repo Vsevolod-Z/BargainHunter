@@ -4,6 +4,7 @@
     <string name="final_price">%dp</string>
     <string name="inital_price">%dp</string>
     <string name="discount_percent">-%d%%</string>
+    <string name="wrong_discount_percent">+%d%%</string>
     <string name="rating_percent">%d%%</string>
     <string name="account_years">YEARS: %s</string>
     <string name="account_lvl">LVL: %s</string>
