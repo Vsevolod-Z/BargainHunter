@@ -2,6 +2,7 @@ package com.example.bargainhunter
 
 
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -9,12 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.ScrollView
-import android.widget.TextView
-import android.widget.VideoView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -28,6 +24,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+
 
 class MonthAxisValueFormatter(private val months: List<String>) : ValueFormatter() {
     override fun getAxisLabel(value: Float, axis: AxisBase?): String {
@@ -304,7 +301,6 @@ class AppPageActivity : AppCompatActivity() {
         rcvDLC = findViewById(R.id.rcvDLC)
         dlcLayout = findViewById(R.id.dlcLayout)
         dlcLayout.visibility = View.VISIBLE
-        graphLayout.visibility= View.VISIBLE
         rcvDLC.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         ApiClient.findByIds(app.steamAppData.dlc).observe(this) { apps ->
             dlcAdapter = MainRecycleViewAdapter(this, apps as MutableList<App>)
@@ -334,6 +330,7 @@ class AppPageActivity : AppCompatActivity() {
     }
     fun playerPeeksInit(){
         graphLayout = findViewById(R.id.graphLayout)
+        graphLayout.visibility= View.VISIBLE
         val date = mutableListOf<String>()
         val entries = mutableListOf<Entry>()
         for(peek in app.playerPeeks.reversed()){
@@ -354,8 +351,10 @@ class AppPageActivity : AppCompatActivity() {
         val dataSet = LineDataSet(entries, "Максимальный онлайн")
         lineChart.description.text = "График онлайна"
 
-        dataSet.setCircleColor( Color.WHITE)
-        dataSet.color = Color.CYAN
+
+
+        val color = ContextCompat.getColor(this,R.color.blue)
+        dataSet.color = color
         dataSet.lineWidth = 1f
         dataSet.valueTextColor = Color.WHITE
         lineChart.xAxis.textColor = Color.WHITE

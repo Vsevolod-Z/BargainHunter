@@ -216,7 +216,6 @@
                         android:background="@drawable/developer_background"
                         android:fontFamily="@font/blue_curve"
                         android:gravity="center"
-                        android:text="Ansid,\nОченьМногобуквиеdddddddddddd"
                         android:textAlignment="center"
                         android:textColor="#F8EEEE" />
                 </LinearLayout>
@@ -250,7 +249,6 @@
                         android:background="@drawable/developer_background"
                         android:fontFamily="@font/blue_curve"
                         android:gravity="center"
-                        android:text="valve"
                         android:textAlignment="center"
                         android:textColor="#FFFFFF" />
                 </LinearLayout>
@@ -317,7 +315,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/price_card_background"
+                    app:cardBackgroundColor="@color/tab_color"
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
@@ -345,7 +343,6 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/techno_race_italic"
                             android:gravity="center"
-                            android:text="-98%"
                             android:textColor="#FFFFFF"
                             android:textSize="20sp" />
 
@@ -406,7 +403,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/price_card_background"
+                    app:cardBackgroundColor="@color/tab_color"
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
@@ -434,7 +431,6 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/techno_race_italic"
                             android:gravity="center"
-                            android:text="-98%"
                             android:textColor="#FFFFFF"
                             android:textSize="20sp" />
 
@@ -495,7 +491,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/price_card_background"
+                    app:cardBackgroundColor="@color/tab_color"
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
@@ -523,7 +519,6 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/techno_race_italic"
                             android:gravity="center"
-                            android:text="-98%"
                             android:textColor="#FFFFFF"
                             android:textSize="20sp" />
 
@@ -584,7 +579,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/price_card_background"
+                    app:cardBackgroundColor="@color/tab_color"
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
@@ -612,7 +607,6 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/techno_race_italic"
                             android:gravity="center"
-                            android:text="-98%"
                             android:textColor="#FFFFFF"
                             android:textSize="20sp" />
 
@@ -741,15 +735,15 @@
             </LinearLayout>
 
             <LinearLayout
-                android:focusable="false"
                 android:id="@+id/videoLayout"
                 android:layout_width="396dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:background="@color/second_dark"
+                android:focusable="false"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:visibility="visible">
 
                 <VideoView
@@ -765,13 +759,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:focusable="false"
                 android:id="@+id/dlcLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
+                android:focusable="false"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:visibility="visible">
 
                 <TextView
@@ -794,13 +788,15 @@
             </LinearLayout>
 
             <LinearLayout
-                android:focusable="false"
                 android:id="@+id/graphLayout"
                 android:layout_width="396dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:orientation="horizontal">
+                android:focusable="false"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/line_chart"
@@ -825,15 +821,15 @@
             </LinearLayout>
 
             <LinearLayout
-                android:focusable="false"
                 android:id="@+id/achievementsLayout"
                 android:layout_width="396dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/screenshots_background"
+                android:focusable="false"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:visibility="visible">
 
                 <TextView
