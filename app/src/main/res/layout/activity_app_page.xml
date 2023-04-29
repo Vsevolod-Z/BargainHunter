@@ -728,7 +728,6 @@
                     android:layout_height="30dp"
                     android:fontFamily="@font/blue_curve"
                     android:gravity="center"
-                    android:text="19 Jan, 2016"
                     android:textAlignment="center"
                     android:textColor="#F6F2F2"
                     android:textSize="16sp" />

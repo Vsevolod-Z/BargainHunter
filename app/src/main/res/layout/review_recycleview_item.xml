@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:autoSizeMaxTextSize="20sp"
-                android:autoSizeMinTextSize="8sp"
+                android:autoSizeMinTextSize="10sp"
                 android:autoSizeTextType="uniform"
                 android:ellipsize="end"
                 android:fontFamily="@font/blue_curve"

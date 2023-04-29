@@ -67,6 +67,8 @@ class AppPageActivity : AppCompatActivity() {
     private lateinit var tvDevelopers: TextView
     private lateinit var tvPublishers: TextView
 
+    private lateinit var tvDate: TextView
+
     private lateinit var winAvailabilityImage: ImageView
     private lateinit var macAvailabilityImage: ImageView
     private lateinit var linuxAvailabilityImage: ImageView
@@ -104,7 +106,7 @@ class AppPageActivity : AppCompatActivity() {
         val icon = findViewById<ImageView>(R.id.iconImageView)
         GameDataPreparer.imageDownloadAndSet(icon, app,this.baseContext)
 
-
+        dateInit()
         availabilityInit()
         developerAndPublisherInit()
         ratingInit()
@@ -128,6 +130,10 @@ class AppPageActivity : AppCompatActivity() {
         }
 
 
+    }
+    fun dateInit(){
+        tvDate = findViewById(R.id.tvDate)
+        tvDate.text = app.steamAppData.release_date.date
     }
     fun availabilityInit(){
         winAvailabilityImage = findViewById(R.id.winAvailabilityImage)
