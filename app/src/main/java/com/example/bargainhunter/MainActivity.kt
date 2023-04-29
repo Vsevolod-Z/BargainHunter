@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
     private  fun initial(){
         binding.pager.adapter = PagerAdapter(this)
         TabLayoutMediator( binding.tabLayout,  binding.pager) {

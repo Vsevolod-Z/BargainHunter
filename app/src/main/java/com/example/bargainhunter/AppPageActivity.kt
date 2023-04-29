@@ -242,7 +242,7 @@ class AppPageActivity : AppCompatActivity() {
             steamShareCard.setOnClickListener{
                 val sendIntent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, String.format("Найдено благодаря Bargain Hunter:\n %s : %dp : %s \n %s",app.steamAppData.name,"Бесплатно","Steam",app.steamAppData.url))
+                    putExtra(Intent.EXTRA_TEXT, String.format("Найдено благодаря Bargain Hunter:\n %s : %s : %s \n %s",app.steamAppData.name,"Бесплатно","Steam",app.steamAppData.url))
                     type = "text/plain"
                 }
                 val shareIntent = Intent.createChooser(sendIntent, "Поделиться")

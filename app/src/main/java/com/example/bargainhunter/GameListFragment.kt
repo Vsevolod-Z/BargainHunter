@@ -160,6 +160,7 @@ class GameListFragment() : Fragment() {
 
         return myView
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

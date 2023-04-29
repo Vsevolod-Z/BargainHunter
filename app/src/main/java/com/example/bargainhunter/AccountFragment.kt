@@ -80,6 +80,9 @@ class AccountFragment : Fragment() {
             webView.loadUrl("about:blank")
             webView.visibility=View.GONE
             closeButtonLayout.visibility=View.GONE
+            avatarCard.visibility = View.VISIBLE
+            tvLvL.visibility = View.VISIBLE
+            tvYears.visibility = View.VISIBLE
 
         }
 
@@ -119,7 +122,6 @@ class AccountFragment : Fragment() {
         }
     }
     private fun imageDownloadAndSet( icon:ImageView){
-        var bitmap: Bitmap
         try {
 
             Glide.with(myView.context).asBitmap().load(SteamUser.userData.avatarfull).into(icon)
