@@ -24,7 +24,7 @@ data class Review (
     @SerializedName("timestamp_updated") val timestamp_updated : Int,
     @SerializedName("voted_up") val voted_up : Boolean,
     @SerializedName("votes_up") val votes_up : Int,
-    @SerializedName("votes_funny") val votes_funny : Int,
+    @SerializedName("votes_funny") val votes_funny : Long,
     @SerializedName("weighted_vote_score") val weighted_vote_score : String,
     @SerializedName("comment_count") val comment_count : Int,
     @SerializedName("steam_purchase") val steam_purchase : Boolean,

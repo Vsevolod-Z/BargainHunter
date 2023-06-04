@@ -129,7 +129,6 @@ class GameDataPreparer {
                         img.setImageBitmap(bitmap)
                     }
                     override fun onLoadCleared(placeholder: Drawable?) {
-                        // Очистка загрузки изображения
                     }
                 })
                 Log.d("image","steamData"+app.steamAppData.header_image)
@@ -164,7 +163,6 @@ class GameDataPreparer {
 
                     }
                     override fun onLoadCleared(placeholder: Drawable?) {
-                        // Очистка загрузки изображения
                     }
                 })
                 Log.d("image","steamData"+app.steamAppData.header_image)
@@ -214,7 +212,6 @@ class GameDataPreparer {
 
                     }
                     override fun onLoadCleared(placeholder: Drawable?) {
-                        // Очистка загрузки изображения
                     }
                 })
                 Log.d("image","steamData"+app.steamAppData.header_image)

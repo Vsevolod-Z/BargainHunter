@@ -1,6 +1,7 @@
 package com.example.bargainhunter
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -41,7 +42,7 @@ class AccountFragment : Fragment() {
 
         var steamCard = view.findViewById<CardView>(R.id.steamCard)
         var discordCard = view.findViewById<CardView>(R.id.discordCard)
-        var vkCard = view.findViewById<CardView>(R.id.vkCard)
+        var siteCard = view.findViewById<CardView>(R.id.siteCard)
         var telegramCard = view.findViewById<CardView>(R.id.telegramCard)
 
         tvYears = view.findViewById<TextView>(R.id.tvYears)
@@ -59,6 +60,7 @@ class AccountFragment : Fragment() {
 
         }
 
+
         nickName = view.findViewById<TextView>(R.id.textViewNickName)
         icon = view.findViewById<ImageView>(R.id.steamAvatar)
 
@@ -66,6 +68,18 @@ class AccountFragment : Fragment() {
         webView = view.findViewById(R.id.webView)
         setUserData()
 
+        telegramCard.setOnClickListener{
+            val uri = Uri.parse("https://t.me/bachelorOfDiscounts_bot")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+
+        }
+        siteCard.setOnClickListener{
+            val uri = Uri.parse("http://109.254.9.58:8081/main")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+
+        }
 
         steamCard.setOnClickListener {
             openWebView()

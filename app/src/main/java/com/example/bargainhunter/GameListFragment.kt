@@ -66,37 +66,21 @@ class GameListFragment() : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         myView = inflater.inflate(R.layout.fragment_game_list, container, false)
-
         recyclerView = myView.findViewById<RecyclerView>(R.id.rcV)
         searchRecylerView = myView.findViewById<RecyclerView>(R.id.searchViewRCV)
-
-
         filterButton = myView.findViewById(R.id.filterButton)
         genresGridView = myView.findViewById(R.id.genresGridView)
         confirmCardView = myView.findViewById(R.id.genresConfirmCardView)
         searchView = myView.findViewById(R.id.searchView)
         searchBack = myView.findViewById<ImageView>(R.id.searchBackButton)
-
-
         genresGridViewAdapter = GenresGridViewAdapter(myView.context,this)
         searchAdapter = SearchRecycleViewAdapter(myView.context)
-
         genresGridView.adapter = genresGridViewAdapter
-
-
         adapter = MainRecycleViewAdapter(myView.context, mutableListOf())
         ApiClient.loadGenres(genresGridViewAdapter)
-        recyclerView.adapter = adapter
-
         searchRecylerView.layoutManager = LinearLayoutManager(myView.context)
         searchRecylerView.adapter=searchAdapter
-
-        recyclerView.layoutManager = LinearLayoutManager(myView.context)
-
-
         searchBack.setOnClickListener {
-            // Здесь можно обработать нажатие на кнопку крестика
-            // Например, очистить содержимое SearchView
             searchView.setQuery("", false)
             searchRecylerView.visibility = View.GONE
             searchBack.visibility = View.GONE
@@ -117,7 +101,6 @@ class GameListFragment() : Fragment() {
             recyclerView.visibility = View.VISIBLE
             genresGridView.visibility = View.GONE
             confirmCardView.visibility = View.GONE
-
         }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -130,11 +113,12 @@ class GameListFragment() : Fragment() {
                 }
                 return false
             }
-
             override fun onQueryTextChange(p0: String?): Boolean {
               return false
             }
         })
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(myView.context)
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -155,20 +139,17 @@ class GameListFragment() : Fragment() {
             }
         })
         loadNextData( )
-
-
-
         return myView
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
     }
     fun loadNextData() {
         val genres = genresGridViewAdapter.selectedGenres.joinToString(",")
         this.context?.let { ApiClient.loadPaginationData(adapter,pageCount,genres, it) }
         pageCount++
     }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
 
 }

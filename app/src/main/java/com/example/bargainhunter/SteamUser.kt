@@ -33,7 +33,6 @@ class SteamUser {
             Log.d("steam","userID:$userID,savedTimeStamp:$savedTimestamp")
             val now = System.currentTimeMillis()
             if (savedTimestamp != -1L && now - savedTimestamp > 7 * 24 * 60 * 60 * 1000 || savedTimestamp == -1L) {
-                // Время создания id больше 7 дней, удаляем его
                 if(userID != "") {
                     prefs.edit().remove("userId").remove("timestamp").apply()
                     Toast.makeText(
@@ -62,7 +61,6 @@ class SteamUser {
                     val gson: Gson = GsonBuilder().create()
                     val data: SteamUserData? =
                         gson.fromJson(responseString, SteamUserData::class.java)
-                    // Добавить новые данные в список адаптера
                     if (data != null) {
                         userData = data
                     }
@@ -104,17 +102,12 @@ class SteamUser {
                         try {
                             userData.apps = gson.fromJson(responseString, object : TypeToken<List<App>>() {}.type)
                             WishListRecycleViewAdapter.updateWishList()
-                            // Добавить новые данные в список адаптера
                         } catch (e: JsonSyntaxException) {
-
-                            // handle exception
                         }
-
 
                     } catch (e: Exception) {
                         Log.e("loadNextData", "Error loading next data", e)
                     }
-
                 }
             }
             isInitialized = true

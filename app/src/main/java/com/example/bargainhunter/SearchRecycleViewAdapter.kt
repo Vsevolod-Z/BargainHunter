@@ -39,7 +39,6 @@ class SearchRecycleViewAdapter(private  val con: Context) : RecyclerView.Adapter
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecycleViewViewHolder {
-        // Создаем ViewHolder для элемента списка
          view = LayoutInflater.from(parent.context).inflate(R.layout.main_recycleview_item, parent, false)
 
         return RecycleViewViewHolder(view)

@@ -52,25 +52,20 @@ class MainRecycleViewAdapter(private  val con: Context,private val appList: Muta
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-        // Создаем ViewHolder для элемента списка
         val view = LayoutInflater.from(parent.context).inflate(R.layout.main_recycleview_item, parent, false)
-
         return MainViewHolder(view)
     }
 
     override fun getItemCount() = appList.size
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        // Заполняем ViewHolder данными из списка
         GameDataPreparer.imageDownloadAndSet(holder.img,holder.title,holder.bottomPanelLayout,appList[position],context)
         holder.title.text = appList[position].steamAppData.name
         GameDataPreparer.calculateRating(  appList[position],holder.rating,holder.likeImage,context)
         GameDataPreparer.sortPrices(appList[position])
         GameDataPreparer.fillGameData(appList[position],holder.discount,holder.discountLayout,holder.initialPrice,holder.finalPrice,context)
         holder.appCard.setOnClickListener{
-
              GameDataPreparer.openApp(context,appList[position])
-
         }
     }
 

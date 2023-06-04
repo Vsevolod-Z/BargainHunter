@@ -377,7 +377,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="5dp"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="@color/discord_icon_color"
+                            app:cardBackgroundColor="#1E3150"
                             app:cardCornerRadius="0dp">
 
                             <TextView
@@ -465,7 +465,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="5dp"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="@color/discord_icon_color"
+                            app:cardBackgroundColor="#1E3150"
                             app:cardCornerRadius="0dp">
 
                             <TextView
@@ -553,7 +553,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="5dp"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="@color/discord_icon_color"
+                            app:cardBackgroundColor="#1E3150"
                             app:cardCornerRadius="0dp">
 
                             <TextView
@@ -641,7 +641,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="5dp"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="@color/discord_icon_color"
+                            app:cardBackgroundColor="#1E3150"
                             app:cardCornerRadius="0dp">
 
                             <TextView
@@ -804,12 +804,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:background="@color/second_dark"
+                android:background="@color/background_dark_theme_endColor"
+                android:focusable="false"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView

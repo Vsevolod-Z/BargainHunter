@@ -14,15 +14,15 @@
     <color name="like_background">#33072D42</color>
     <color name="price_card_background">#083E5C</color>
     <color name="dark_title_color">#1EAEE0</color>
-    <color name="background_dark_theme_startColor">#020F43</color>
-    <color name="background_dark_theme_endColor">#2451A3</color>
+    <color name="background_dark_theme_startColor">#0e3a5d</color>
+    <color name="background_dark_theme_endColor">#4874a8</color>
     <color name="steam_icon_color">#05508a</color>
     <color name="discord_icon_color">#5865f2</color>
     <color name="vk_icon_color">#2787f5</color>
     <color name="telegram_icon_color">#33aade</color>
 
-    <color name="main_color">#2c4470</color>
-    <color name="second_dark">#1E3150</color>
+    <color name="main_color">#0b91cd</color>
+    <color name="second_dark">#2c4470</color>
     <color name="tab_color">#085996</color>
     <color name="like_positive">#2FFF00</color>
     <color name="like_neutral">#BFAF1E</color>

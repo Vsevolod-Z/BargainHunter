@@ -28,6 +28,7 @@ class ApiClient {
         val genresQuery = "${serverUrl}/api/apps/getGenres"
         val searchAppsQuery = "${serverUrl}/api/apps/findByTitle?title=%s"
         val findByIdsQuery = "${serverUrl}/api/apps/findByIds?appids=%s"
+        var isDataLoaded = false
         lateinit var genres:MutableList<Genres>
 
         fun searchApps(adapter: SearchRecycleViewAdapter,query:String){
@@ -45,11 +46,9 @@ class ApiClient {
                     val gson: Gson = GsonBuilder().create()
 
                     var apps:MutableList<App>  = gson.fromJson(responseString, object : TypeToken<List<App>>() {}.type)
-                    // Добавить новые данные в список адаптера
                     withContext(Dispatchers.Main) {
                         adapter.updateAppList(apps)
                         adapter.notifyDataSetChanged()
-                        // Скрыть индикатор загрузки
                     }
 
 
@@ -72,11 +71,9 @@ class ApiClient {
                     val gson: Gson = GsonBuilder().create()
 
                     genres = gson.fromJson(responseString, object : TypeToken<List<Genres>>() {}.type)
-                    // Добавить новые данные в список адаптера
                     withContext(Dispatchers.Main) {
                         adapter.addGenres(genres)
                         adapter.notifyDataSetChanged()
-                        // Скрыть индикатор загрузки
 
                     }
 
@@ -105,17 +102,14 @@ class ApiClient {
 
                     try {
                         val appList: List<App> = gson.fromJson(responseString, object : TypeToken<List<App>>() {}.type)
-                        // Добавить новые данные в список адаптера
                         withContext(Dispatchers.Main) {
 
                             adapter.addData(appList)
-                            // Скрыть индикатор загрузки
                             adapter.setIsLoading(false)
                             adapter.notifyDataSetChanged()
                         }
                     } catch (e: JsonSyntaxException) {
                         Log.e("ApiClient", "Error gson.fromJson data", e)
-                        // handle exception
                     }
 
                 } catch (e: Exception) {

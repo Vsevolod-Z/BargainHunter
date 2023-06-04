@@ -295,11 +295,11 @@ class AppPageActivity : AppCompatActivity() {
         if(app.gogAppData.price.baseAmount != "") {
             gogPriceCard = findViewById(R.id.gogPriceCard)
             gogShareCard = findViewById(R.id.gogShareCard)
-
+            Log.d("price",""+(app.gogAppData.price.finalAmount.toFloat().toInt())::class.java.typeName)
             gogShareCard.setOnClickListener{
                 val sendIntent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, String.format("Найдено благодаря Bargain Hunter:\n %s : %dp : %s \n %s",app.steamAppData.name,app.gogAppData.price.finalAmount,"GOG",app.gogAppData.url))
+                    putExtra(Intent.EXTRA_TEXT, String.format("Найдено благодаря Bargain Hunter:\n %s : %dp : %s \n %s",app.steamAppData.name,app.gogAppData.price.finalAmount.toFloat().toInt(),"GOG",app.gogAppData.url))
                     type = "text/plain"
                 }
                 val shareIntent = Intent.createChooser(sendIntent, "Поделиться")
@@ -341,11 +341,13 @@ class AppPageActivity : AppCompatActivity() {
     fun requirementsInit(){
         tvRequirments = findViewById(R.id.tvRequirements)
         var resultStr = ""
-        for (i in 1..app.steamAppData.pc_requirements.minimum.size-1) {
-            if(i%2==0) {
-               resultStr += app.steamAppData.pc_requirements.minimum[i]+"\n"
-            }else{
-                resultStr += app.steamAppData.pc_requirements.minimum[i]+"\t\t"
+        if(!app.steamAppData.pc_requirements.minimum.isNullOrEmpty()) {
+            for (i in 1..app.steamAppData.pc_requirements.minimum.size - 1) {
+                if (i % 2 == 0) {
+                    resultStr += app.steamAppData.pc_requirements.minimum[i] + "\n"
+                } else {
+                    resultStr += app.steamAppData.pc_requirements.minimum[i] + "\t\t"
+                }
             }
         }
         Log.d("requ","requ: " + resultStr)
@@ -367,7 +369,7 @@ class AppPageActivity : AppCompatActivity() {
         lineChart.setTouchEnabled(true)
         lineChart.setPinchZoom(true)
         lineChart.description.textColor = Color.WHITE
-        lineChart.xAxis.granularity = 1f //
+        lineChart.xAxis.granularity = 1f
 
         lineChart.axisLeft.granularity = 100f
 
@@ -436,8 +438,6 @@ class AppPageActivity : AppCompatActivity() {
         }
     }
     override fun onBackPressed() {
-
-        // выполните здесь действия, которые вы хотите повторить при нажатии кнопки назад
-        super.finish() // не забудьте вызвать супер метод в конце, чтобы закрыть Activity
+        super.finish()
     }
 }

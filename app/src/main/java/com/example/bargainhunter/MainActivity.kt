@@ -21,11 +21,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 
 
 class MainActivity : AppCompatActivity() {
-
-
-
     var adapter: FragmentPagerItemAdapter? = null
-    var pageCount = 1
     private lateinit var binding: ActivityMainBinding
     private lateinit var handler: Handler
 
@@ -34,9 +30,6 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         val sharedPref = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-       /* val editor = sharedPref.edit()
-        editor.clear()
-        editor.apply()*/
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -56,12 +49,8 @@ class MainActivity : AppCompatActivity() {
                         binding.progressBarCard.visibility = View.GONE
                         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     }
-
             }.start()
         }
-
-
-
     }
 
     private  fun initial(){
